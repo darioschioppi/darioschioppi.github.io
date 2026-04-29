@@ -45,16 +45,28 @@
             padding: 40px 28px;
         }
 
-        .sidebar .photo-placeholder {
+        .photo-wrapper {
             width: 120px;
             height: 120px;
             border-radius: 50%;
-            background: rgba(255,255,255,0.1);
             border: 3px solid var(--accent);
             margin: 0 auto 24px;
+            overflow: hidden;
+            background: rgba(255,255,255,0.1);
             display: flex;
             align-items: center;
             justify-content: center;
+        }
+
+        .photo-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center top;
+            display: block;
+        }
+
+        .photo-wrapper .initials {
             font-size: 42px;
             color: var(--accent);
             font-weight: 700;
@@ -332,7 +344,11 @@
 
         <!-- ═══ SIDEBAR ═══════════════════════════════════════════ -->
         <aside class="sidebar">
-            <div class="photo-placeholder">DS</div>
+            <div class="photo-wrapper">
+                <img src="photo.jpg" alt="Dario Schioppi"
+                     onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
+                <span class="initials" style="display:none">DS</span>
+            </div>
             <h1>Dario Schioppi</h1>
             <div class="subtitle">IT Project Manager</div>
 
