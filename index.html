@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dario Schioppi — IT Project Manager</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --dark-blue: #1B3A5C;
+            --mid-blue: #2E6DA4;
+            --accent: #4A90D9;
+            --light-blue: #D6E4F0;
+            --pale-bg: #F7FAFC;
+            --dark: #1a1a2e;
+            --gray: #555;
+            --light-gray: #999;
+            --white: #fff;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--dark);
+            line-height: 1.5;
+            background: #eef2f7;
+        }
+
+        .cv-container {
+            max-width: 1100px;
+            margin: 30px auto;
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+            border-radius: 8px;
+            overflow: hidden;
+            min-height: 100vh;
+        }
+
+        /* ── SIDEBAR ─────────────────────────────── */
+        .sidebar {
+            background: var(--dark-blue);
+            color: var(--white);
+            padding: 40px 28px;
+        }
+
+        .sidebar .photo-placeholder {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            border: 3px solid var(--accent);
+            margin: 0 auto 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 42px;
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        .sidebar h1 {
+            text-align: center;
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+
+        .sidebar .subtitle {
+            text-align: center;
+            font-size: 11px;
+            color: var(--light-blue);
+            font-weight: 400;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 30px;
+        }
+
+        .sidebar .section-title {
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--accent);
+            border-bottom: 1px solid rgba(74,144,217,0.4);
+            padding-bottom: 6px;
+            margin-top: 28px;
+            margin-bottom: 12px;
+        }
+
+        .sidebar .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+            font-size: 13px;
+        }
+
+        .sidebar .contact-item .icon {
+            width: 28px;
+            height: 28px;
+            background: rgba(74,144,217,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            flex-shrink: 0;
+        }
+
+        .sidebar .skill-tag {
+            display: inline-block;
+            background: rgba(74,144,217,0.15);
+            border: 1px solid rgba(74,144,217,0.3);
+            color: var(--light-blue);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            margin: 3px 2px;
+            font-weight: 400;
+        }
+
+        .sidebar .tool-group {
+            margin-bottom: 8px;
+        }
+
+        .sidebar .tool-group .label {
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .sidebar .tool-group .value {
+            font-size: 12px;
+            color: rgba(255,255,255,0.85);
+            margin-top: 2px;
+        }
+
+        .sidebar .cert-item {
+            margin-bottom: 10px;
+        }
+
+        .sidebar .cert-item .cert-name {
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--white);
+        }
+
+        .sidebar .cert-item .cert-issuer {
+            font-size: 10px;
+            color: var(--light-blue);
+            opacity: 0.8;
+        }
+
+        .sidebar .edu-item {
+            margin-bottom: 10px;
+        }
+
+        .sidebar .edu-item .edu-title {
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .sidebar .edu-item .edu-school {
+            font-size: 10px;
+            color: var(--light-blue);
+            opacity: 0.8;
+        }
+
+        /* ── MAIN ────────────────────────────────── */
+        .main {
+            background: var(--white);
+            padding: 40px 36px;
+        }
+
+        .main .section-heading {
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--mid-blue);
+            margin-top: 32px;
+            margin-bottom: 14px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--mid-blue);
+        }
+
+        .main .section-heading:first-child {
+            margin-top: 0;
+        }
+
+        .profile-text {
+            font-size: 14px;
+            color: var(--gray);
+            line-height: 1.7;
+        }
+
+        .company-block {
+            margin-top: 20px;
+        }
+
+        .company-header {
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+            margin-bottom: 4px;
+        }
+
+        .company-name {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--dark-blue);
+        }
+
+        .company-meta {
+            font-size: 12px;
+            color: var(--light-gray);
+            font-style: italic;
+        }
+
+        .role-list {
+            margin: 6px 0 12px;
+            padding-left: 0;
+            list-style: none;
+        }
+
+        .role-list li {
+            font-size: 13px;
+            color: var(--gray);
+            padding: 2px 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .role-list li::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--accent);
+            flex-shrink: 0;
+        }
+
+        .role-list li .period {
+            font-size: 11px;
+            color: var(--light-gray);
+            margin-left: auto;
+            white-space: nowrap;
+        }
+
+        .project {
+            margin-top: 14px;
+            padding-left: 16px;
+            border-left: 3px solid var(--light-blue);
+        }
+
+        .project-title {
+            display: flex;
+            align-items: baseline;
+            gap: 10px;
+            margin-bottom: 6px;
+        }
+
+        .project-title .name {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--mid-blue);
+        }
+
+        .project-title .period {
+            font-size: 11px;
+            color: var(--light-gray);
+            font-style: italic;
+        }
+
+        .project ul {
+            padding-left: 16px;
+            margin: 0;
+        }
+
+        .project ul li {
+            font-size: 12.5px;
+            color: var(--gray);
+            margin-bottom: 4px;
+            line-height: 1.5;
+        }
+
+        .project ul li::marker {
+            color: var(--accent);
+        }
+
+        .minor-role {
+            margin-top: 14px;
+        }
+
+        .minor-role .desc {
+            font-size: 12.5px;
+            color: var(--gray);
+            margin-top: 2px;
+        }
+
+        /* ── PRINT ───────────────────────────────── */
+        @media print {
+            body { background: white; }
+            .cv-container {
+                margin: 0;
+                box-shadow: none;
+                border-radius: 0;
+                min-height: auto;
+            }
+        }
+
+        /* ── RESPONSIVE ──────────────────────────── */
+        @media (max-width: 800px) {
+            .cv-container {
+                grid-template-columns: 1fr;
+                margin: 0;
+                border-radius: 0;
+            }
+            .sidebar { padding: 30px 20px; }
+            .main { padding: 30px 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="cv-container">
+
+        <!-- ═══ SIDEBAR ═══════════════════════════════════════════ -->
+        <aside class="sidebar">
+            <div class="photo-placeholder">DS</div>
+            <h1>Dario Schioppi</h1>
+            <div class="subtitle">IT Project Manager</div>
+
+            <!-- Contatti -->
+            <div class="section-title">Contatti</div>
+            <div class="contact-item">
+                <span class="icon">&#9906;</span>
+                <span>Bologna, Italia</span>
+            </div>
+            <div class="contact-item">
+                <span class="icon">&#9743;</span>
+                <span>+39 346 841 0375</span>
+            </div>
+            <div class="contact-item">
+                <span class="icon">&#9993;</span>
+                <span>dario.schioppi@gmail.com</span>
+            </div>
+
+            <!-- Competenze -->
+            <div class="section-title">Competenze Chiave</div>
+            <div>
+                <span class="skill-tag">Project Management</span>
+                <span class="skill-tag">Generative AI</span>
+                <span class="skill-tag">Agile Transformation</span>
+                <span class="skill-tag">Enterprise Architecture</span>
+                <span class="skill-tag">Cloud Governance</span>
+                <span class="skill-tag">FinOps</span>
+                <span class="skill-tag">IT Cost Control</span>
+                <span class="skill-tag">ISO 27001</span>
+                <span class="skill-tag">Change Management</span>
+                <span class="skill-tag">C-Level Reporting</span>
+            </div>
+
+            <!-- Strumenti -->
+            <div class="section-title">Strumenti & Tech</div>
+            <div class="tool-group">
+                <div class="label">AI</div>
+                <div class="value">Claude | Gemini | ChatGPT</div>
+            </div>
+            <div class="tool-group">
+                <div class="label">PM</div>
+                <div class="value">Jira | ServiceNow</div>
+            </div>
+            <div class="tool-group">
+                <div class="label">Cloud</div>
+                <div class="value">AWS | Azure | GCP</div>
+            </div>
+            <div class="tool-group">
+                <div class="label">DevOps</div>
+                <div class="value">GitLab | Jenkins | Docker | OpenShift</div>
+            </div>
+            <div class="tool-group">
+                <div class="label">BI</div>
+                <div class="value">Power BI | Tableau | SAS</div>
+            </div>
+            <div class="tool-group">
+                <div class="label">Monitor</div>
+                <div class="value">Dynatrace | Splunk</div>
+            </div>
+            <div class="tool-group">
+                <div class="label">Security</div>
+                <div class="value">SonarQube | Dependency Track</div>
+            </div>
+
+            <!-- Certificazioni -->
+            <div class="section-title">Certificazioni</div>
+            <div class="cert-item">
+                <div class="cert-name">Claude Code in Action</div>
+                <div class="cert-issuer">Anthropic &mdash; 2026</div>
+            </div>
+            <div class="cert-item">
+                <div class="cert-name">AI Foundation</div>
+                <div class="cert-issuer">APMG International &mdash; 2025</div>
+            </div>
+            <div class="cert-item">
+                <div class="cert-name">ITIL 4 Foundation</div>
+                <div class="cert-issuer">Axelos &mdash; 2019</div>
+            </div>
+            <div class="cert-item">
+                <div class="cert-name">Lead Auditor ISO/IEC 27001</div>
+                <div class="cert-issuer">ITHUM &mdash; 2018</div>
+            </div>
+            <div class="cert-item">
+                <div class="cert-name">MoP Foundation</div>
+                <div class="cert-issuer">Axelos &mdash; 2021</div>
+            </div>
+            <div class="cert-item">
+                <div class="cert-name">DevOps Foundation</div>
+                <div class="cert-issuer">DevOps Institute &mdash; 2018</div>
+            </div>
+            <div class="cert-item">
+                <div class="cert-name">AgilePM Foundation</div>
+                <div class="cert-issuer">APMG International &mdash; 2019</div>
+            </div>
+            <div class="cert-item">
+                <div class="cert-name">PRINCE2 Foundation</div>
+                <div class="cert-issuer">Axelos &mdash; 2018</div>
+            </div>
+
+            <!-- Formazione -->
+            <div class="section-title">Formazione</div>
+            <div class="edu-item">
+                <div class="edu-title">Laurea Magistrale in Ing. Gestionale</div>
+                <div class="edu-school">Universit&agrave; Federico II, Napoli &mdash; 2015</div>
+            </div>
+            <div class="edu-item">
+                <div class="edu-title">Corso Data Management</div>
+                <div class="edu-school">SAS Institute, Milano &mdash; 2016</div>
+            </div>
+        </aside>
+
+        <!-- ═══ MAIN ══════════════════════════════════════════════ -->
+        <main class="main">
+            <h2 class="section-heading">Profilo Professionale</h2>
+            <p class="profile-text">
+                IT Project Manager con 7+ anni di esperienza nella consulenza IT per il settore
+                <strong>Insurance &amp; Financial Services</strong>. Coordino un team di 8 persone
+                presso HSPI S.p.A. (TXT Group), ricoprendo anche il ruolo di Account Manager.
+                Expertise in programmi di <strong>Generative AI</strong>, migrazione di piattaforme
+                enterprise e governance IT, con track record di iniziative coinvolgenti centinaia
+                di team e stakeholder C-level.
+            </p>
+
+            <h2 class="section-heading">Esperienza Professionale</h2>
+
+            <!-- HSPI -->
+            <div class="company-block">
+                <div class="company-header">
+                    <span class="company-name">HSPI S.p.A. @ TXT Group</span>
+                    <span class="company-meta">Bologna &mdash; Nov 2017 &ndash; Presente</span>
+                </div>
+                <ul class="role-list">
+                    <li>IT Manager &amp; Account Manager <span class="period">Feb 2023 &ndash; Presente</span></li>
+                    <li>IT Senior Consultant <span class="period">Mar 2020 &ndash; Gen 2023</span></li>
+                    <li>IT Consultant <span class="period">Nov 2017 &ndash; Mar 2020</span></li>
+                </ul>
+
+                <div class="project">
+                    <div class="project-title">
+                        <span class="name">PM Generative AI Coding Automation</span>
+                        <span class="period">Gen 2025 &ndash; Presente</span>
+                    </div>
+                    <ul>
+                        <li>Programma GenAI per una delle principali compagnie assicurative italiane: piattaforma AI-driven con Claude Sonnet e Google Gemini integrati nell&rsquo;SDLC</li>
+                        <li>Supervisione cross-team (Sviluppo, Test, DevOps, Business); KPI automatizzati e reporting C-level</li>
+                    </ul>
+                </div>
+
+                <div class="project">
+                    <div class="project-title">
+                        <span class="name">PM Migrazione API &mdash; IBM API Connect v5 &rarr; v10</span>
+                        <span class="period">Set 2023 &ndash; Nov 2024</span>
+                    </div>
+                    <ul>
+                        <li>800+ API e 5.000 sottoscrizioni migrate; 400+ persone e 50 team coinvolti</li>
+                        <li>Piano di progetto, gestione rischi, test non-regressione; dashboard Power BI per il Comitato di Direzione</li>
+                    </ul>
+                </div>
+
+                <div class="project">
+                    <div class="project-title">
+                        <span class="name">PM Cloud Transformation Multi-Cloud</span>
+                        <span class="period">Gen 2023 &ndash; Giu 2024</span>
+                    </div>
+                    <ul>
+                        <li>Standard aziendali per provisioning centralizzato AWS/Azure/GCP e governance risorse</li>
+                        <li>Strategia FinOps con dashboard Tableau e alerting; processi ITSM integrati</li>
+                    </ul>
+                </div>
+
+                <div class="project">
+                    <div class="project-title">
+                        <span class="name">PM Migrazione OpenShift v3 &rarr; v4</span>
+                        <span class="period">Ott 2022 &ndash; Ott 2023</span>
+                    </div>
+                    <ul>
+                        <li>400+ applicazioni e 2.000 componenti migrati in produzione senza interruzione di servizio</li>
+                        <li>Piano completo: configurazione, rischi, test non-regressione, compatibilit&agrave; change</li>
+                    </ul>
+                </div>
+
+                <div class="project">
+                    <div class="project-title">
+                        <span class="name">PMO DevOps &amp; Agile Transformation</span>
+                        <span class="period">Feb 2019 &ndash; Set 2021</span>
+                    </div>
+                    <ul>
+                        <li>Toolchain DevOps self-service per 1.500+ sviluppatori (GitLab, Jenkins, Docker, Dynatrace, Splunk)</li>
+                        <li>Introduzione Jira e framework Agile; progettazione processi ITIL automatizzati</li>
+                    </ul>
+                </div>
+
+                <div class="project">
+                    <div class="project-title">
+                        <span class="name">IT Cost Controller &amp; Governance</span>
+                        <span class="period">Nov 2018 &ndash; Presente</span>
+                    </div>
+                    <ul>
+                        <li>Budget IT annuale con dashboard Power BI; gestione contratti e procurement fornitori</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- SR Technics -->
+            <div class="company-block">
+                <div class="company-header">
+                    <span class="company-name">SR Technics</span>
+                    <span class="company-meta">Zurigo &mdash; Ott 2016 &ndash; Ott 2017</span>
+                </div>
+                <div class="minor-role">
+                    <ul class="role-list"><li>Job Card Methodics Specialist</li></ul>
+                    <p class="desc">Ottimizzazione job card MRO e gestione istruzioni di manutenzione aeromobili.</p>
+                </div>
+            </div>
+
+            <!-- Atitech -->
+            <div class="company-block">
+                <div class="company-header">
+                    <span class="company-name">Atitech S.p.A.</span>
+                    <span class="company-meta">Napoli &mdash; Apr 2015 &ndash; Set 2016</span>
+                </div>
+                <div class="minor-role">
+                    <ul class="role-list"><li>Aerospace Production Planner</li></ul>
+                    <p class="desc">Pianificazione produzione componenti aerospaziali e controllo qualit&agrave;.</p>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
