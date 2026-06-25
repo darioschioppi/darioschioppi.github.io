@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Granite di Catania — Ricette Originali</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Barlow+Condensed:wght@400;500;600;700&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --black:    #0d0b08;
+      --black2:   #151209;
+      --cream:    #f0e8d8;
+      --cream-dim:#b8ad9e;
+      --gold:     #c9a84c;
+      --gold-dim: #7a6428;
+      --border:   rgba(201,168,76,0.18);
+      --radius:   14px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--cream);
+      font-family: 'Crimson Pro', Georgia, serif;
+      line-height: 1.65;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── NOISE TEXTURE OVERLAY ─── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.45;
+    }
+
+    /* ── HERO ──────────────────── */
+    .hero {
+      position: relative;
+      min-height: 92vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 60px 24px 80px;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 40%, rgba(180,80,20,0.12) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 20% 80%, rgba(201,168,76,0.06) 0%, transparent 60%),
+        radial-gradient(ellipse 30% 30% at 80% 10%, rgba(74,120,180,0.06) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .hero-eyebrow {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 28px;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.1s forwards;
+    }
+
+    .hero-title {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(5.5rem, 18vw, 13rem);
+      font-weight: 300;
+      line-height: 0.9;
+      letter-spacing: -0.02em;
+      color: var(--cream);
+      margin-bottom: 10px;
+      opacity: 0;
+      animation: fadeUp 0.9s ease 0.25s forwards;
+    }
+
+    .hero-title em {
+      font-style: italic;
+      color: var(--gold);
+      font-weight: 300;
+    }
+
+    .hero-sub {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.1rem, 3vw, 1.6rem);
+      font-style: italic;
+      font-weight: 300;
+      color: var(--cream-dim);
+      margin-bottom: 36px;
+      opacity: 0;
+      animation: fadeUp 0.9s ease 0.4s forwards;
+    }
+
+    .hero-divider {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      width: min(320px, 80%);
+      margin: 0 auto 32px;
+      opacity: 0;
+      animation: fadeUp 0.9s ease 0.55s forwards;
+    }
+    .hero-divider::before,
+    .hero-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold-dim), transparent);
+    }
+    .hero-divider span {
+      font-size: 1.2rem;
+      color: var(--gold);
+    }
+
+    .hero-meta {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--cream-dim);
+      opacity: 0;
+      animation: fadeUp 0.9s ease 0.65s forwards;
+    }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold-dim);
+      opacity: 0;
+      animation: fadeUp 1s ease 1.2s forwards;
+    }
+    .hero-scroll::after {
+      content: '';
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, var(--gold-dim), transparent);
+      animation: scrollLine 2s ease-in-out 2s infinite;
+    }
+
+    /* ── STORIA ────────────────── */
+    .storia {
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 80px 24px 60px;
+      text-align: center;
+    }
+
+    .label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 16px;
+    }
+
+    .storia h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 6vw, 3rem);
+      font-weight: 400;
+      font-style: italic;
+      color: var(--cream);
+      margin-bottom: 20px;
+      line-height: 1.2;
+    }
+
+    .storia p {
+      font-size: 1.05rem;
+      color: var(--cream-dim);
+      line-height: 1.8;
+      font-weight: 300;
+    }
+
+    /* ── TECNICA ───────────────── */
+    .tecnica {
+      max-width: 760px;
+      margin: 0 auto 80px;
+      padding: 0 24px;
+    }
+
+    .tecnica-box {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px 36px;
+      background: rgba(201,168,76,0.04);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .tecnica-box::before {
+      content: '✦';
+      position: absolute;
+      right: 28px; top: 20px;
+      font-size: 2.5rem;
+      color: rgba(201,168,76,0.08);
+    }
+
+    .tecnica-box h3 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 10px;
+    }
+
+    .tecnica-box p {
+      font-size: 1rem;
+      color: var(--cream-dim);
+      line-height: 1.75;
+      font-weight: 300;
+    }
+
+    .tecnica-box strong { color: var(--cream); font-weight: 600; }
+
+    .steps-row {
+      display: flex;
+      gap: 12px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+
+    .step-pill {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(201,168,76,0.08);
+      border: 1px solid rgba(201,168,76,0.15);
+      border-radius: 100px;
+      padding: 6px 14px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.78rem;
+      letter-spacing: 0.05em;
+      color: var(--cream-dim);
+    }
+    .step-pill .num {
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      background: var(--gold);
+      color: var(--black);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.65rem; font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    /* ── SECTION HEADER ─────── */
+    .section-header {
+      text-align: center;
+      padding: 0 24px 48px;
+    }
+
+    .section-header h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.2rem, 7vw, 3.8rem);
+      font-weight: 300;
+      color: var(--cream);
+      line-height: 1.1;
+    }
+
+    .section-header h2 em {
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    /* ── RECIPE GRID ─────────── */
+    .recipe-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(min(360px, 100%), 1fr));
+      gap: 16px;
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 20px 100px;
+    }
+
+    /* ── RECIPE CARD ─────────── */
+    .recipe-card {
+      --c: #888;
+      --c-dim: rgba(136,136,136,0.15);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: var(--radius);
+      background: var(--black2);
+      overflow: hidden;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      cursor: pointer;
+    }
+
+    .recipe-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.4), 0 0 0 1px var(--c-dim);
+    }
+
+    .card-header {
+      padding: 26px 26px 20px;
+      display: flex;
+      align-items: flex-start;
+      gap: 18px;
+    }
+
+    .card-icon {
+      width: 52px; height: 52px;
+      border-radius: 12px;
+      background: var(--c-dim);
+      border: 1px solid rgba(255,255,255,0.08);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.6rem;
+      flex-shrink: 0;
+      transition: transform 0.3s ease;
+    }
+    .recipe-card:hover .card-icon { transform: scale(1.08) rotate(-3deg); }
+
+    .card-info { flex: 1; min-width: 0; }
+
+    .card-tag {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.64rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--c);
+      margin-bottom: 4px;
+    }
+
+    .card-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.65rem;
+      font-weight: 600;
+      color: var(--cream);
+      line-height: 1.1;
+      margin-bottom: 6px;
+    }
+
+    .card-desc {
+      font-size: 0.88rem;
+      color: var(--cream-dim);
+      line-height: 1.5;
+      font-weight: 300;
+    }
+
+    .card-meta {
+      padding: 0 26px 20px;
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .meta-chip {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      color: var(--cream-dim);
+      display: flex; align-items: center; gap: 5px;
+    }
+    .meta-chip::before {
+      content: '';
+      width: 4px; height: 4px;
+      border-radius: 50%;
+      background: var(--c);
+      flex-shrink: 0;
+    }
+
+    .card-toggle {
+      padding: 14px 26px;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--c);
+      transition: background 0.2s;
+    }
+    .recipe-card:hover .card-toggle { background: rgba(255,255,255,0.02); }
+
+    .toggle-arrow {
+      width: 22px; height: 22px;
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.7rem;
+      transition: transform 0.35s ease, background 0.2s;
+    }
+    .recipe-card.open .toggle-arrow {
+      transform: rotate(180deg);
+      background: var(--c-dim);
+    }
+
+    /* ── CARD BODY (expanded) ── */
+    .card-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .recipe-card.open .card-body { max-height: 1200px; }
+
+    .card-body-inner {
+      padding: 24px 26px 28px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .recipe-section-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.64rem;
+      font-weight: 700;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--c);
+      margin-bottom: 12px;
+      margin-top: 20px;
+    }
+    .recipe-section-title:first-child { margin-top: 0; }
+
+    .ingredients-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+    .ingredients-list li {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      font-size: 0.94rem;
+      color: var(--cream-dim);
+      font-weight: 300;
+      padding-bottom: 7px;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+    .ingredients-list li:last-child { border-bottom: none; padding-bottom: 0; }
+
+    .ing-qty {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--c);
+      min-width: 72px;
+      flex-shrink: 0;
+    }
+
+    .method-list {
+      list-style: none;
+      counter-reset: step;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .method-list li {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      font-size: 0.94rem;
+      color: var(--cream-dim);
+      font-weight: 300;
+      line-height: 1.6;
+    }
+
+    .method-list li::before {
+      counter-increment: step;
+      content: counter(step);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 700;
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      background: var(--c-dim);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: var(--c);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .tip-box {
+      margin-top: 18px;
+      background: rgba(255,255,255,0.03);
+      border-left: 2px solid var(--c);
+      border-radius: 0 8px 8px 0;
+      padding: 12px 16px;
+      font-size: 0.88rem;
+      color: var(--cream-dim);
+      font-style: italic;
+      font-weight: 300;
+    }
+    .tip-box strong { color: var(--c); font-style: normal; }
+
+    /* ── BASE SCIROPPO ─────── */
+    .base-banner {
+      max-width: 860px;
+      margin: 0 auto 32px;
+      padding: 0 20px;
+    }
+
+    .base-banner-inner {
+      background: linear-gradient(135deg, rgba(201,168,76,0.07), rgba(201,168,76,0.03));
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 22px 28px;
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+    }
+
+    .base-icon {
+      font-size: 1.8rem;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .base-text h4 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 4px;
+    }
+
+    .base-text p {
+      font-size: 0.92rem;
+      color: var(--cream-dim);
+      font-weight: 300;
+      line-height: 1.65;
+    }
+
+    .base-text code {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.85rem;
+      background: rgba(201,168,76,0.1);
+      color: var(--gold);
+      padding: 2px 8px;
+      border-radius: 4px;
+      letter-spacing: 0.05em;
+    }
+
+    /* ── FOOTER ──────────────── */
+    footer {
+      text-align: center;
+      padding: 40px 24px 60px;
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+
+    footer p {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #3a3530;
+    }
+    footer a { color: var(--gold-dim); text-decoration: none; }
+    footer a:hover { color: var(--gold); }
+
+    /* ── ANIMATIONS ──────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes scrollLine {
+      0%, 100% { opacity: 0.3; transform: scaleY(1); }
+      50%       { opacity: 1;   transform: scaleY(1.2); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── RESPONSIVE ──────────── */
+    @media (max-width: 600px) {
+      .hero { min-height: 85vh; }
+      .tecnica-box { padding: 24px 20px; }
+      .card-header { padding: 20px 20px 16px; gap: 14px; }
+      .card-meta { padding: 0 20px 16px; }
+      .card-toggle { padding: 12px 20px; }
+      .card-body-inner { padding: 20px 20px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══ HERO ═══════════════════════════════════════════════ -->
+  <section class="hero">
+    <div class="hero-eyebrow">Ricette siciliane autentiche</div>
+    <h1 class="hero-title">Gra<em>nite</em></h1>
+    <p class="hero-sub">di Catania — La neve dell'Etna</p>
+    <div class="hero-divider"><span>✦</span></div>
+    <p class="hero-meta">Pasticceria Savia · Via Etnea, Catania · dal 1897</p>
+    <div class="hero-scroll">Scorri</div>
+  </section>
+
+  <!-- ═══ STORIA ══════════════════════════════════════════════ -->
+  <section class="storia reveal">
+    <div class="label">Origini</div>
+    <h2>La leggenda dei nivaroli</h2>
+    <p>
+      Fin dal Medioevo, i <em>nivaroli</em> salivano sull'Etna d'inverno a raccogliere la neve,
+      conservandola nelle <em>neviere</em> scavate nella roccia vulcanica. D'estate la trasportavano
+      a valle, grattata e profumata con succo di limone o sciroppi di fiori.
+      La granita catanese nasce così — fredda come la neve, calda come il sole siciliano.
+      Oggi la Pasticceria Savia, in Via Etnea dal 1897, ne custodisce l'eredità.
+    </p>
+  </section>
+
+  <!-- ═══ TECNICA ══════════════════════════════════════════════ -->
+  <section class="tecnica reveal">
+    <div class="tecnica-box">
+      <h3>⚙ La tecnica fondamentale — senza gelatiera</h3>
+      <p>
+        Il segreto della granita catanese è la <strong>raschiatura ripetuta</strong>:
+        il composto va congelato in un contenitore largo e basso (max 4 cm),
+        poi raschiato o frullato con il minipimer ogni 30 minuti per 3-4 ore.
+        Questo rompe i cristalli di ghiaccio, creando la consistenza <strong>cremosa e vellutata</strong>
+        tipica di Catania — non granulosa come i ghiaccioli industriali.
+      </p>
+      <div class="steps-row">
+        <div class="step-pill"><span class="num">1</span> Sciroppo freddo</div>
+        <div class="step-pill"><span class="num">2</span> Contenitore basso</div>
+        <div class="step-pill"><span class="num">3</span> Freezer −18°C</div>
+        <div class="step-pill"><span class="num">4</span> Raschia ogni 30 min</div>
+        <div class="step-pill"><span class="num">5</span> Ripeti 5–6 volte</div>
+        <div class="step-pill"><span class="num">6</span> Riposo 30 min finale</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ GRANITE ══════════════════════════════════════════════ -->
+  <div class="section-header reveal">
+    <div class="label">Le ricette</div>
+    <h2>Otto gusti <em>classici</em></h2>
+  </div>
+
+  <!-- BASE SCIROPPO BANNER -->
+  <div class="base-banner reveal">
+    <div class="base-banner-inner">
+      <div class="base-icon">🍯</div>
+      <div class="base-text">
+        <h4>Sciroppo base — comune a tutte le ricette</h4>
+        <p>
+          Per granite cremose aggiungi sempre il <strong>glucosio</strong>:
+          <code>700ml acqua + 280g zucchero + 40g glucosio</code> — porta a ebollizione,
+          mescola fino a scioglimento completo, raffredda prima dell'uso.
+          Il glucosio abbassa il punto di congelamento e impedisce la formazione di cristalli grossolani.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- RECIPE GRID -->
+  <div class="recipe-grid">
+
+    <!-- CAFFÈ -->
+    <article class="recipe-card reveal" style="--c:#c4782a;--c-dim:rgba(196,120,42,0.15)">
+      <div class="card-header">
+        <div class="card-icon">☕</div>
+        <div class="card-info">
+          <div class="card-tag">Il gusto iconico</div>
+          <div class="card-name">Granita al Caffè</div>
+          <div class="card-desc">Espresso ristretto siciliano, denso e profumato. Servita con panna montata non dolce e brioche col tuppo.</div>
+        </div>
+      </div>
+      <div class="card-meta">
+        <span class="meta-chip">3–4 ore</span>
+        <span class="meta-chip">6 porzioni</span>
+        <span class="meta-chip">Senza gelatiera</span>
+      </div>
+      <div class="card-toggle">
+        Vedi ricetta <span class="toggle-arrow">↓</span>
+      </div>
+      <div class="card-body">
+        <div class="card-body-inner">
+          <div class="recipe-section-title">Ingredienti</div>
+          <ul class="ingredients-list">
+            <li><span class="ing-qty">400 ml</span> Espresso ristretto molto forte, freddo</li>
+            <li><span class="ing-qty">400 ml</span> Sciroppo base (vedi sopra)</li>
+            <li><span class="ing-qty">30 g</span> Zucchero extra (il caffè bilancia il dolce)</li>
+            <li><span class="ing-qty">q.b.</span> Panna fresca da montare (non dolcificata)</li>
+          </ul>
+          <div class="recipe-section-title">Procedimento</div>
+          <ol class="method-list">
+            <li>Prepara lo sciroppo base e lascialo raffreddare completamente.</li>
+            <li>Unisci l'espresso freddo allo sciroppo freddo. Mescola bene.</li>
+            <li>Versa in un contenitore in acciaio o pyrex largo e basso (max 4 cm).</li>
+            <li>Congela. Ogni 30 minuti raschia con una forchetta oppure frulla 20 secondi con il minipimer.</li>
+            <li>Ripeti 5–6 volte nell'arco di 3 ore. L'ultima mezz'ora lascia riposare senza toccare.</li>
+            <li>Servi in tazza con una nuvola di panna e brioche col tuppo per intingere.</li>
+          </ol>
+          <div class="tip-box"><strong>Consiglio:</strong> usa caffè della Moka preparato doppio e ristretto, non espresso diluito. La qualità del caffè è tutto.</div>
+        </div>
+      </div>
+    </article>
+
+    <!-- MANDORLA -->
+    <article class="recipe-card reveal" style="--c:#d4a843;--c-dim:rgba(212,168,67,0.15)">
+      <div class="card-header">
+        <div class="card-icon">🌰</div>
+        <div class="card-info">
+          <div class="card-tag">La più catanese</div>
+          <div class="card-name">Granita alla Mandorla</div>
+          <div class="card-desc">Pasta di mandorle di Avola, fiori d'arancio, scorza di limone. Il profumo che identifica Catania.</div>
+        </div>
+      </div>
+      <div class="card-meta">
+        <span class="meta-chip">3–4 ore</span>
+        <span class="meta-chip">6 porzioni</span>
+        <span class="meta-chip">Mandorle di Avola</span>
+      </div>
+      <div class="card-toggle">
+        Vedi ricetta <span class="toggle-arrow">↓</span>
+      </div>
+      <div class="card-body">
+        <div class="card-body-inner">
+          <div class="recipe-section-title">Ingredienti</div>
+          <ul class="ingredients-list">
+            <li><span class="ing-qty">180 g</span> Pasta di mandorle di Avola (o latte di mandorla puro)</li>
+            <li><span class="ing-qty">800 ml</span> Acqua</li>
+            <li><span class="ing-qty">220 g</span> Zucchero</li>
+            <li><span class="ing-qty">1</span> Scorza di limone non trattato</li>
+            <li><span class="ing-qty">1 cucchiaio</span> Acqua di fiori d'arancio</li>
+          </ul>
+          <div class="recipe-section-title">Procedimento</div>
+          <ol class="method-list">
+            <li>Sciogli la pasta di mandorle nell'acqua tiepida con il minipimer fino a ottenere un liquido omogeneo.</li>
+            <li>Aggiungi lo zucchero e scalda a fuoco basso finché si scioglie. Non fare bollire.</li>
+            <li>Aggiungi la scorza di limone, lascia in infusione 10 minuti, poi filtra con colino fine.</li>
+            <li>Quando è completamente freddo, aggiungi l'acqua di fiori d'arancio.</li>
+            <li>Congela con raschiatura ogni 30 minuti per 3–4 ore.</li>
+          </ol>
+          <div class="tip-box"><strong>Alternativa:</strong> se non trovi pasta di mandorle di Avola, usa 500 ml di latte di mandorla puro non dolcificato come base — il risultato è quasi identico.</div>
+        </div>
+      </div>
+    </article>
+
+    <!-- CIOCCOLATO -->
+    <article class="recipe-card reveal" style="--c:#a0522d;--c-dim:rgba(160,82,45,0.15)">
+      <div class="card-header">
+        <div class="card-icon">🍫</div>
+        <div class="card-info">
+          <div class="card-tag">La versione speziata</div>
+          <div class="card-name">Granita al Cioccolato</div>
+          <div class="card-desc">Cacao amaro, cioccolato fondente, cannella e vaniglia. La ricetta di Catania è diversa da tutte le altre.</div>
+        </div>
+      </div>
+      <div class="card-meta">
+        <span class="meta-chip">3–4 ore</span>
+        <span class="meta-chip">6 porzioni</span>
+        <span class="meta-chip">70% cacao</span>
+      </div>
+      <div class="card-toggle">
+        Vedi ricetta <span class="toggle-arrow">↓</span>
+      </div>
+      <div class="card-body">
+        <div class="card-body-inner">
+          <div class="recipe-section-title">Ingredienti</div>
+          <ul class="ingredients-list">
+            <li><span class="ing-qty">80 g</span> Cacao amaro in polvere (setacciato)</li>
+            <li><span class="ing-qty">50 g</span> Cioccolato fondente 70% (sciolto a bagno maria)</li>
+            <li><span class="ing-qty">800 ml</span> Acqua</li>
+            <li><span class="ing-qty">260 g</span> Zucchero</li>
+            <li><span class="ing-qty">1</span> Stecca di cannella</li>
+            <li><span class="ing-qty">1</span> Bacca di vaniglia (o 1 cucchiaino estratto)</li>
+            <li><span class="ing-qty">1 pizzico</span> Sale fino</li>
+          </ul>
+          <div class="recipe-section-title">Procedimento</div>
+          <ol class="method-list">
+            <li>Porta acqua + zucchero + cannella + vaniglia a ebollizione.</li>
+            <li>Aggiungi il cacao setacciato a pioggia, mescolando con una frusta per evitare grumi.</li>
+            <li>Fuori dal fuoco aggiungi il cioccolato fuso e il sale. Mescola bene.</li>
+            <li>Filtra con colino, raffredda completamente (almeno 2 ore in frigo).</li>
+            <li>Congela con raschiatura ogni 30 minuti per 3–4 ore.</li>
+          </ol>
+          <div class="tip-box"><strong>Il segreto catanese:</strong> la cannella non è opzionale — è l'elemento che distingue la granita al cioccolato di Catania da tutte le altre versioni siciliane.</div>
+        </div>
+      </div>
+    </article>
+
+    <!-- LIMONE -->
+    <article class="recipe-card reveal" style="--c:#c9b840;--c-dim:rgba(201,184,64,0.15)">
+      <div class="card-header">
+        <div class="card-icon">🍋</div>
+        <div class="card-info">
+          <div class="card-tag">La più antica · Origini arabe</div>
+          <div class="card-name">Granita al Limone</div>
+          <div class="card-desc">Limoni siciliani, succo fresco, scorza in infusione. La ricetta originale da cui è nata la granita.</div>
+        </div>
+      </div>
+      <div class="card-meta">
+        <span class="meta-chip">3–4 ore</span>
+        <span class="meta-chip">6 porzioni</span>
+        <span class="meta-chip">Limoni siciliani</span>
+      </div>
+      <div class="card-toggle">
+        Vedi ricetta <span class="toggle-arrow">↓</span>
+      </div>
+      <div class="card-body">
+        <div class="card-body-inner">
+          <div class="recipe-section-title">Ingredienti</div>
+          <ul class="ingredients-list">
+            <li><span class="ing-qty">200 ml</span> Succo di limone fresco (~4 limoni siciliani)</li>
+            <li><span class="ing-qty">2</span> Scorze di limone non trattato (grattugiate)</li>
+            <li><span class="ing-qty">600 ml</span> Acqua</li>
+            <li><span class="ing-qty">280 g</span> Zucchero (più degli altri gusti — bilancia l'acidità)</li>
+          </ul>
+          <div class="recipe-section-title">Procedimento</div>
+          <ol class="method-list">
+            <li>Porta acqua + zucchero + scorze di limone a ebollizione. Mescola finché lo zucchero si scioglie.</li>
+            <li>Spegni, lascia le scorze in infusione 10 minuti. Filtra.</li>
+            <li>Lascia raffreddare completamente — fondamentale.</li>
+            <li>Solo da freddo aggiungi il succo di limone. Mescola.</li>
+            <li>Congela con raschiatura ogni 30 minuti per 3–4 ore.</li>
+          </ol>
+          <div class="tip-box"><strong>Regola d'oro:</strong> il succo di limone va aggiunto sempre da freddo — se entra a contatto con lo sciroppo caldo diventa amaro e perde il profumo fresco.</div>
+        </div>
+      </div>
+    </article>
+
+    <!-- FRAGOLA -->
+    <article class="recipe-card reveal" style="--c:#c4365a;--c-dim:rgba(196,54,90,0.15)">
+      <div class="card-header">
+        <div class="card-icon">🍓</div>
+        <div class="card-info">
+          <div class="card-tag">Frutta fresca</div>
+          <div class="card-name">Granita alla Fragola</div>
+          <div class="card-desc">Fragole crude frullate, mai cotte. Il profumo rimane intatto, il colore è acceso, il sapore è immediato.</div>
+        </div>
+      </div>
+      <div class="card-meta">
+        <span class="meta-chip">3–4 ore</span>
+        <span class="meta-chip">6 porzioni</span>
+        <span class="meta-chip">Fragole mature</span>
+      </div>
+      <div class="card-toggle">
+        Vedi ricetta <span class="toggle-arrow">↓</span>
+      </div>
+      <div class="card-body">
+        <div class="card-body-inner">
+          <div class="recipe-section-title">Ingredienti</div>
+          <ul class="ingredients-list">
+            <li><span class="ing-qty">500 g</span> Fragole fresche molto mature</li>
+            <li><span class="ing-qty">30 ml</span> Succo di limone</li>
+            <li><span class="ing-qty">300 ml</span> Acqua</li>
+            <li><span class="ing-qty">220 g</span> Zucchero</li>
+          </ul>
+          <div class="recipe-section-title">Procedimento</div>
+          <ol class="method-list">
+            <li>Prepara lo sciroppo: acqua + zucchero a ebollizione, mescola, lascia raffreddare completamente.</li>
+            <li>Frulla le fragole crude con il succo di limone. Non cuocere mai la frutta.</li>
+            <li>Filtra attraverso un colino se vuoi una texture liscia e uniforme.</li>
+            <li>Unisci la purea allo sciroppo freddo. Mescola bene.</li>
+            <li>Congela con raschiatura ogni 30 minuti per 3–4 ore.</li>
+          </ol>
+          <div class="tip-box"><strong>La regola della frutta:</strong> frutta cruda + sciroppo freddo. Cuocere la frutta distrugge il profumo fresco che è l'anima della granita.</div>
+        </div>
+      </div>
+    </article>
+
+    <!-- PESCA -->
+    <article class="recipe-card reveal" style="--c:#d47a38;--c-dim:rgba(212,122,56,0.15)">
+      <div class="card-header">
+        <div class="card-icon">🍑</div>
+        <div class="card-info">
+          <div class="card-tag">Estate siciliana</div>
+          <div class="card-name">Granita alla Pesca</div>
+          <div class="card-desc">Pesche gialle mature, tocco di acqua di rose. Frullate all'istante per preservare il colore e il profumo.</div>
+        </div>
+      </div>
+      <div class="card-meta">
+        <span class="meta-chip">3–4 ore</span>
+        <span class="meta-chip">6 porzioni</span>
+        <span class="meta-chip">Pesche gialle</span>
+      </div>
+      <div class="card-toggle">
+        Vedi ricetta <span class="toggle-arrow">↓</span>
+      </div>
+      <div class="card-body">
+        <div class="card-body-inner">
+          <div class="recipe-section-title">Ingredienti</div>
+          <ul class="ingredients-list">
+            <li><span class="ing-qty">500 g</span> Pesche gialle mature (sbucciate, denocciolate)</li>
+            <li><span class="ing-qty">20 ml</span> Succo di limone</li>
+            <li><span class="ing-qty">250 ml</span> Acqua</li>
+            <li><span class="ing-qty">200 g</span> Zucchero</li>
+            <li><span class="ing-qty">1 cucchiaio</span> Acqua di rose (opzionale, ma tradizionale)</li>
+          </ul>
+          <div class="recipe-section-title">Procedimento</div>
+          <ol class="method-list">
+            <li>Prepara lo sciroppo: acqua + zucchero a ebollizione. Raffredda completamente.</li>
+            <li>Sbuccia le pesche e frullale immediatamente con il succo di limone — ossidano in pochi minuti.</li>
+            <li>Unisci la purea allo sciroppo freddo. Aggiungi l'acqua di rose.</li>
+            <li>Congela con raschiatura ogni 30 minuti per 3–4 ore.</li>
+          </ol>
+          <div class="tip-box"><strong>Tempistica:</strong> sbuccia e frulla le pesche solo all'ultimo momento — a contatto con l'aria anneriscono rapidamente. Il limone aiuta ma non basta se si aspetta troppo.</div>
+        </div>
+      </div>
+    </article>
+
+    <!-- ANGURIA -->
+    <article class="recipe-card reveal" style="--c:#c43a3a;--c-dim:rgba(196,58,58,0.15)">
+      <div class="card-header">
+        <div class="card-icon">🍉</div>
+        <div class="card-info">
+          <div class="card-tag">A Catania: "muluni"</div>
+          <div class="card-name">Granita all'Anguria</div>
+          <div class="card-desc">Polpa di anguria, pochissimo zucchero, gelsomino. Il gusto più estivo e dissetante del Gargano.</div>
+        </div>
+      </div>
+      <div class="card-meta">
+        <span class="meta-chip">3–4 ore</span>
+        <span class="meta-chip">6 porzioni</span>
+        <span class="meta-chip">Poco zucchero</span>
+      </div>
+      <div class="card-toggle">
+        Vedi ricetta <span class="toggle-arrow">↓</span>
+      </div>
+      <div class="card-body">
+        <div class="card-body-inner">
+          <div class="recipe-section-title">Ingredienti</div>
+          <ul class="ingredients-list">
+            <li><span class="ing-qty">700 g</span> Polpa di anguria senza semi</li>
+            <li><span class="ing-qty">20 ml</span> Succo di limone</li>
+            <li><span class="ing-qty">120 g</span> Zucchero (l'anguria è già dolce — non esagerare)</li>
+            <li><span class="ing-qty">1 cucchiaino</span> Fiori di gelsomino secchi (tocco siciliano autentico)</li>
+          </ul>
+          <div class="recipe-section-title">Procedimento</div>
+          <ol class="method-list">
+            <li>Frulla la polpa di anguria con il succo di limone. Passa al colino per eliminare i filamenti.</li>
+            <li>Aggiungi lo zucchero direttamente — si scioglie a freddo senza bisogno di sciroppo caldo.</li>
+            <li>Mescola finché lo zucchero è completamente dissolto. Aggiungi i fiori di gelsomino.</li>
+            <li>Congela con raschiatura ogni 30 minuti per 3–4 ore.</li>
+          </ol>
+          <div class="tip-box"><strong>Il tocco siciliano:</strong> il gelsomino nell'anguria è una tradizione catanese antichissima. In estate i fiori freschi si trovano nei mercati rionali. Essiccato funziona ugualmente bene.</div>
+        </div>
+      </div>
+    </article>
+
+    <!-- GELSI NERI -->
+    <article class="recipe-card reveal" style="--c:#9b4dca;--c-dim:rgba(155,77,202,0.15)">
+      <div class="card-header">
+        <div class="card-icon">🫐</div>
+        <div class="card-info">
+          <div class="card-tag">Il gusto raro · Giugno–Luglio</div>
+          <div class="card-name">Granita ai Gelsi Neri</div>
+          <div class="card-desc">Il gusto più raro e tipicamente catanese. Colore viola intensissimo, sapore che non si dimentica.</div>
+        </div>
+      </div>
+      <div class="card-meta">
+        <span class="meta-chip">3–4 ore</span>
+        <span class="meta-chip">6 porzioni</span>
+        <span class="meta-chip">Stagione giu–lug</span>
+      </div>
+      <div class="card-toggle">
+        Vedi ricetta <span class="toggle-arrow">↓</span>
+      </div>
+      <div class="card-body">
+        <div class="card-body-inner">
+          <div class="recipe-section-title">Ingredienti</div>
+          <ul class="ingredients-list">
+            <li><span class="ing-qty">400 g</span> Gelsi neri freschi (stagione: giugno–luglio)</li>
+            <li><span class="ing-qty">30 ml</span> Succo di limone</li>
+            <li><span class="ing-qty">300 ml</span> Acqua</li>
+            <li><span class="ing-qty">230 g</span> Zucchero</li>
+          </ul>
+          <div class="recipe-section-title">Procedimento</div>
+          <ol class="method-list">
+            <li>Frulla i gelsi con il succo di limone.</li>
+            <li>Filtra accuratamente con un colino a maglia fine — i semi danno amarezza e rovinano la texture.</li>
+            <li>Prepara lo sciroppo: acqua + zucchero a ebollizione. Lascia raffreddare completamente.</li>
+            <li>Unisci la purea filtrata allo sciroppo freddo. Mescola bene.</li>
+            <li>Congela con raschiatura ogni 30 minuti per 3–4 ore.</li>
+          </ol>
+          <div class="tip-box"><strong>Stagionalità:</strong> i gelsi neri sono disponibili solo per 2–3 settimane a giugno. In questa breve finestra, ogni bar catanese autentico li propone. Approfittane subito.</div>
+        </div>
+      </div>
+    </article>
+
+  </div><!-- /recipe-grid -->
+
+  <!-- ═══ FOOTER ══════════════════════════════════════════════ -->
+  <footer>
+    <p>Ricette siciliane — <a href="/cv">Dario Schioppi</a> &nbsp;·&nbsp; ispirate alla Pasticceria Savia, Catania</p>
+  </footer>
+
+  <script>
+    // ── CARD TOGGLE ──────────────────────────────────────────
+    document.querySelectorAll('.recipe-card').forEach(card => {
+      const toggle = card.querySelector('.card-toggle');
+      if (!toggle) return;
+      toggle.addEventListener('click', e => {
+        const isOpen = card.classList.contains('open');
+        // close all others
+        document.querySelectorAll('.recipe-card.open').forEach(c => c.classList.remove('open'));
+        if (!isOpen) card.classList.add('open');
+      });
+    });
+
+    // ── SCROLL REVEAL ─────────────────────────────────────────
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), i * 60);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
