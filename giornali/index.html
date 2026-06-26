@@ -433,6 +433,197 @@
       .topbar-note { display: none; }
       .url-prefix { display: none; }
     }
+
+    /* ── RSS PANEL BACKDROP ──── */
+    #rssPanelBackdrop {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.55);
+      z-index: 140;
+      backdrop-filter: blur(2px);
+    }
+    #rssPanelBackdrop.open { display: block; }
+
+    /* ── RSS PANEL ───────────── */
+    #rssPanel {
+      position: fixed;
+      top: 0; right: -520px;
+      width: min(500px, 100vw);
+      height: 100vh;
+      background: var(--bg2);
+      border-left: 1px solid var(--border);
+      z-index: 150;
+      display: flex;
+      flex-direction: column;
+      transition: right 0.3s cubic-bezier(0.32, 0, 0.15, 1);
+      box-shadow: -8px 0 60px rgba(0,0,0,0.7);
+      overflow: hidden;
+    }
+    #rssPanel.open { right: 0; }
+
+    .rss-panel-header {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-shrink: 0;
+      background: var(--bg3);
+    }
+    #rssPanelName {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+    #rssPanelStatus {
+      font-size: 0.68rem;
+      color: var(--text-dim);
+      font-family: 'IBM Plex Mono', monospace;
+      margin-top: 3px;
+    }
+    .rss-panel-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+    .rss-open-btn {
+      padding: 5px 11px;
+      background: var(--accent-dim);
+      border: 1px solid rgba(232,197,71,0.25);
+      border-radius: 6px;
+      color: var(--accent);
+      font-size: 0.73rem;
+      font-weight: 500;
+      font-family: 'IBM Plex Sans', sans-serif;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.15s;
+    }
+    .rss-open-btn:hover { background: rgba(232,197,71,0.2); }
+    .rss-panel-close {
+      background: none; border: none; cursor: pointer;
+      color: var(--text-dim); font-size: 1.1rem; line-height: 1;
+      padding: 4px 8px; border-radius: 4px;
+      font-family: 'IBM Plex Sans', sans-serif;
+      transition: color 0.15s, background 0.15s;
+    }
+    .rss-panel-close:hover { color: var(--text); background: var(--bg2); }
+
+    .rss-panel-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 0 20px 20px;
+      scrollbar-width: thin;
+      scrollbar-color: var(--border) transparent;
+    }
+    .rss-panel-body::-webkit-scrollbar { width: 4px; }
+    .rss-panel-body::-webkit-scrollbar-track { background: transparent; }
+    .rss-panel-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+    /* ── LOADING ─────────────── */
+    .rss-loading {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      padding: 64px 20px;
+      color: var(--text-dim);
+      font-size: 0.84rem;
+    }
+    .rss-spinner {
+      width: 28px; height: 28px;
+      border: 2px solid var(--border);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.75s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── ERROR ───────────────── */
+    .rss-error {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      padding: 52px 20px;
+      text-align: center;
+    }
+    .rss-error-icon { font-size: 2rem; margin-bottom: 4px; }
+    .rss-error p { font-size: 0.87rem; color: var(--text); line-height: 1.5; }
+    .rss-error-sub { color: var(--text-dim) !important; font-size: 0.78rem !important; }
+    .rss-fallback-btn {
+      margin-top: 10px;
+      padding: 10px 22px;
+      background: var(--accent);
+      color: #000;
+      border: none;
+      border-radius: 8px;
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-size: 0.84rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .rss-fallback-btn:hover { background: #f0d060; }
+
+    /* ── ARTICLE CARD ────────── */
+    .rss-article {
+      border-bottom: 1px solid var(--border);
+      padding: 15px 0;
+    }
+    .rss-article:last-child { border-bottom: none; }
+    .rss-article-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text);
+      line-height: 1.45;
+      margin-bottom: 5px;
+    }
+    .rss-article-meta {
+      font-size: 0.66rem;
+      color: var(--text-dim);
+      font-family: 'IBM Plex Mono', monospace;
+      margin-bottom: 6px;
+    }
+    .rss-article-desc {
+      font-size: 0.79rem;
+      color: var(--text-dim);
+      line-height: 1.55;
+      margin-bottom: 9px;
+    }
+    .rss-read-btn {
+      background: none;
+      border: none;
+      color: var(--accent);
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 500;
+      cursor: pointer;
+      padding: 0;
+      transition: color 0.15s;
+    }
+    .rss-read-btn:hover { color: #f0d060; }
+
+    /* ── MOBILE PANEL ────────── */
+    @media (max-width: 600px) {
+      #rssPanel {
+        top: auto;
+        bottom: -100vh;
+        right: 0; left: 0;
+        width: 100vw;
+        height: 90vh;
+        border-left: none;
+        border-top: 1px solid var(--border);
+        border-radius: 16px 16px 0 0;
+        transition: bottom 0.3s cubic-bezier(0.32, 0, 0.15, 1);
+        box-shadow: 0 -8px 60px rgba(0,0,0,0.7);
+      }
+      #rssPanel.open { bottom: 0; right: 0; }
+    }
   </style>
 </head>
 <body>
@@ -442,14 +633,14 @@
     <div class="topbar-logo">Giornali<span>.</span>free</div>
     <div class="topbar-note">
       <span class="dot-green"></span>
-      Powered by archive.is — bypass paywall legale
+      RSS live · bypass paywall · archive.is
     </div>
   </div>
 
   <!-- HERO -->
   <div class="hero">
-    <h1>Leggi i giornali<br><em>senza abbonamento</em></h1>
-    <p>Accedi agli archivi di archive.is per leggere articoli da Corriere, Repubblica, Sole 24 Ore e tutti i principali quotidiani italiani. Legale, gratuito, nessuna registrazione.</p>
+    <h1>Leggi i giornali<br><em>in tempo reale</em></h1>
+    <p>Clicca su un giornale per sfogliare le ultime notizie direttamente in pagina — aggiornate in tempo reale via RSS. Per gli articoli completi, usa i servizi di bypass integrati.</p>
   </div>
 
   <!-- HOW IT WORKS -->
@@ -457,19 +648,19 @@
     <div class="how-inner">
       <div class="how-step">
         <div class="how-num">1</div>
-        <div class="how-text"><strong>Copia l'URL</strong> dell'articolo che vuoi leggere dal browser o da un link condiviso</div>
+        <div class="how-text"><strong>Clicca un giornale</strong> per aprire il pannello RSS con le ultime notizie in tempo reale</div>
       </div>
       <div class="how-step">
         <div class="how-num">2</div>
-        <div class="how-text"><strong>Incollalo</strong> nel campo qui sotto e premi "Archivio"</div>
+        <div class="how-text"><strong>Sfoglia i titoli</strong> e leggi i sommari direttamente in pagina, aggiornati ogni pochi minuti</div>
       </div>
       <div class="how-step">
         <div class="how-num">3</div>
-        <div class="how-text"><strong>archive.is</strong> mostra la versione archiviata dell'articolo completo, senza paywall</div>
+        <div class="how-text"><strong>Per l'articolo completo</strong> clicca "Leggi completo →" e scegli il servizio di bypass</div>
       </div>
       <div class="how-step">
         <div class="how-num">4</div>
-        <div class="how-text">Se l'articolo non è ancora archiviato, <strong>archive.is lo cattura</strong> al momento</div>
+        <div class="how-text"><strong>Hai un URL specifico?</strong> Incollalo nel campo qui sotto per aprirlo con bypass diretto</div>
       </div>
     </div>
   </div>
@@ -672,6 +863,24 @@
     </div>
   </div>
 
+  <!-- RSS PANEL BACKDROP -->
+  <div id="rssPanelBackdrop" onclick="closeRssPanel()"></div>
+
+  <!-- RSS PANEL -->
+  <div id="rssPanel">
+    <div class="rss-panel-header">
+      <div>
+        <div id="rssPanelName"></div>
+        <div id="rssPanelStatus"></div>
+      </div>
+      <div class="rss-panel-actions">
+        <button class="rss-open-btn" onclick="openRssSite()">Apri sito →</button>
+        <button class="rss-panel-close" onclick="closeRssPanel()">✕</button>
+      </div>
+    </div>
+    <div id="rssPanelBody" class="rss-panel-body"></div>
+  </div>
+
   <footer>
     <p>Questo strumento utilizza <a href="https://archive.is" target="_blank">archive.is</a> — servizio pubblico di archiviazione web. Nessun dato viene raccolto. &nbsp;·&nbsp; <a href="/cv">Dario Schioppi</a></p>
   </footer>
@@ -687,43 +896,74 @@
       { name: 'Google Cache', desc: 'Versione cache di Google', url: function(u){ return 'https://webcache.googleusercontent.com/search?q=cache:' + encodeURIComponent(u); } }
     ];
 
+    // ── RSS FEEDS MAP (url giornale → url feed RSS)
+    var RSS_FEEDS = {
+      'https://www.corriere.it/':           'https://xml2.corrieredellasera.it/rss/homepage.xml',
+      'https://www.repubblica.it/':         'https://www.repubblica.it/rss/homepage/rss2.0.xml',
+      'https://www.lastampa.it/':           'https://www.lastampa.it/rss/homepage.xml',
+      'https://www.ilmessaggero.it/':       'https://www.ilmessaggero.it/rss/home.xml',
+      'https://www.ilgiornale.it/':         'https://www.ilgiornale.it/rss/tutte-le-news.xml',
+      'https://www.avvenire.it/':           'https://www.avvenire.it/rss/rss-ultimi-aggiornamenti.xml',
+      'https://www.editorialedomani.it/':   'https://www.editorialedomani.it/feed/',
+      'https://www.ilfoglio.it/':           'https://www.ilfoglio.it/feed/',
+      'https://www.laverita.info/':         null,
+      'https://www.ilfattoquotidiano.it/':  'https://www.ilfattoquotidiano.it/feed/',
+      'https://www.ilsole24ore.com/':       'https://www.ilsole24ore.com/rss/italia--e-mondo.xml',
+      'https://www.milanofinanza.it/':      'https://www.milanofinanza.it/rss/rss.xml',
+      'https://www.corriere.it/economia/':  'https://xml2.corrieredellasera.it/rss/economia.xml',
+      'https://it.businessinsider.com/':    'https://it.businessinsider.com/feed/',
+      'https://www.linkiesta.it/':          'https://www.linkiesta.it/feed/',
+      'https://www.gazzetta.it/':           'https://www.gazzetta.it/rss/home.xml',
+      'https://www.corrieredellosport.it/': 'https://www.corrieredellosport.it/rss/homepage.xml',
+      'https://www.tuttosport.com/':        'https://www.tuttosport.com/rss/home.xml',
+      'https://www.ansa.it/':              'https://www.ansa.it/sito/notizie/topnews/topnews_rss.xml',
+      'https://www.ilpost.it/':            'https://www.ilpost.it/feed/',
+      'https://www.huffingtonpost.it/':    'https://www.huffingtonpost.it/feeds/index.xml',
+      'https://www.fanpage.it/':           'https://www.fanpage.it/feed/',
+      'https://www.today.it/':             'https://www.today.it/rss.xml',
+      'https://www.open.online/':          'https://www.open.online/feed/',
+      'https://www.tgcom24.mediaset.it/':  'https://www.tgcom24.mediaset.it/rss/tgcom24.xml',
+      'https://tg24.sky.it/':              'https://tg24.sky.it/articoli/rss.xml',
+      'https://www.ilrestodelcarlino.it/': 'https://www.ilrestodelcarlino.it/rss/home.xml',
+      'https://www.lanazione.it/':         'https://www.lanazione.it/rss/home.xml',
+      'https://www.iltirreno.it/':         'https://www.iltirreno.it/rss/home.xml',
+      'https://www.corriere.it/bologna/':  'https://bologna.corriere.it/rss/homepage.xml',
+      'https://www.ilmattino.it/':         'https://www.ilmattino.it/rss/home.xml',
+      'https://palermo.repubblica.it/':    'https://palermo.repubblica.it/rss/homepage/rss2.0.xml'
+    };
+
+    var currentSiteUrl = '';
+
     // ── COSTRUISCI PULSANTI SERVIZI (senza innerHTML)
     function buildServices(cleanUrl) {
       var list = document.getElementById('serviceList');
       while (list.firstChild) { list.removeChild(list.firstChild); }
-
       SERVICES.forEach(function(svc) {
         var a = document.createElement('a');
         a.className = 'service-btn';
         a.href = svc.url(cleanUrl);
         a.target = '_blank';
         a.rel = 'noopener noreferrer';
-
         var info = document.createElement('div');
         info.className = 'service-info';
-
         var nameEl = document.createElement('span');
         nameEl.className = 'service-name';
         nameEl.textContent = svc.name;
-
         var descEl = document.createElement('span');
         descEl.className = 'service-desc';
         descEl.textContent = svc.desc;
-
         info.appendChild(nameEl);
         info.appendChild(descEl);
-
         var arrow = document.createElement('span');
         arrow.className = 'service-arrow';
         arrow.textContent = '→';
-
         a.appendChild(info);
         a.appendChild(arrow);
         list.appendChild(a);
       });
     }
 
-    // ── APRI MODALE
+    // ── APRI MODALE BYPASS
     function openModal(rawUrl) {
       var clean = rawUrl.startsWith('http') ? rawUrl : 'https://' + rawUrl;
       document.getElementById('modalUrl').textContent = clean;
@@ -754,9 +994,224 @@
       if (e.key === 'Enter') openArchive();
     });
 
-    // ── APRI HOMEPAGE GIORNALE
+    // ── APRI HOMEPAGE GIORNALE → RSS oppure fallback modal
     function openPaper(url) {
-      openModal(url);
+      var feed = RSS_FEEDS[url];
+      if (feed === undefined || feed === null) {
+        openModal(url);
+        return;
+      }
+      // Cerca il nome del giornale nel DOM
+      var name = url.replace(/^https?:\/\//, '').replace(/\/$/, '');
+      var cards = document.querySelectorAll('.paper-card');
+      for (var i = 0; i < cards.length; i++) {
+        var c = cards[i];
+        var onc = c.getAttribute('onclick') || '';
+        if (onc.indexOf(url.replace(/\/$/, '')) !== -1) {
+          var nameEl = c.querySelector('.paper-name');
+          if (nameEl) { name = nameEl.textContent; break; }
+        }
+      }
+      openRssPanel(url, feed, name);
+    }
+
+    // ── RSS PANEL: APRI
+    function openRssPanel(siteUrl, feedUrl, paperName) {
+      currentSiteUrl = siteUrl;
+      document.getElementById('rssPanelName').textContent = paperName;
+      document.getElementById('rssPanelStatus').textContent = 'Caricamento…';
+      var body = document.getElementById('rssPanelBody');
+      while (body.firstChild) body.removeChild(body.firstChild);
+
+      // Spinner
+      var loadDiv = document.createElement('div');
+      loadDiv.className = 'rss-loading';
+      var spinner = document.createElement('div');
+      spinner.className = 'rss-spinner';
+      var loadTxt = document.createElement('p');
+      loadTxt.textContent = 'Recupero notizie in tempo reale…';
+      loadDiv.appendChild(spinner);
+      loadDiv.appendChild(loadTxt);
+      body.appendChild(loadDiv);
+
+      document.getElementById('rssPanelBackdrop').classList.add('open');
+      document.getElementById('rssPanel').classList.add('open');
+      document.body.style.overflow = 'hidden';
+
+      // Fetch RSS via CORS proxy
+      var proxyUrl = 'https://api.allorigins.win/get?url=' + encodeURIComponent(feedUrl);
+      var controller = new AbortController();
+      var tid = setTimeout(function() { controller.abort(); }, 12000);
+
+      fetch(proxyUrl, { signal: controller.signal })
+        .then(function(r) {
+          clearTimeout(tid);
+          if (!r.ok) throw new Error('HTTP ' + r.status);
+          return r.json();
+        })
+        .then(function(data) {
+          if (!data.contents || data.contents.length < 100) throw new Error('Feed vuoto');
+          parseAndRenderFeed(data.contents, siteUrl);
+        })
+        .catch(function() {
+          clearTimeout(tid);
+          showRssError(siteUrl);
+          document.getElementById('rssPanelStatus').textContent = 'Feed non disponibile';
+        });
+    }
+
+    // ── RSS PANEL: CHIUDI
+    function closeRssPanel() {
+      document.getElementById('rssPanelBackdrop').classList.remove('open');
+      document.getElementById('rssPanel').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    // ── APRI SITO CON BYPASS (dal pannello RSS)
+    function openRssSite() {
+      if (currentSiteUrl) openModal(currentSiteUrl);
+    }
+
+    // ── STRIP HTML da testo RSS
+    function stripHtml(str) {
+      if (!str) return '';
+      return str
+        .replace(/<!\[CDATA\[|\]\]>/g, '')
+        .replace(/<[^>]*>/g, '')
+        .replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&')
+        .replace(/&quot;/g, '"').replace(/&#039;/g, "'").replace(/&apos;/g, "'")
+        .replace(/&nbsp;/g, ' ').replace(/\s+/g, ' ').trim();
+    }
+
+    // ── FORMATTA DATA relativa
+    function formatDate(dateStr) {
+      if (!dateStr) return '';
+      try {
+        var d = new Date(dateStr);
+        if (isNaN(d.getTime())) return dateStr.substring(0, 16);
+        var mins = Math.floor((Date.now() - d) / 60000);
+        if (mins < 2)  return 'adesso';
+        if (mins < 60) return mins + ' min fa';
+        var h = Math.floor(mins / 60);
+        if (h < 24) return h + (h === 1 ? ' ora fa' : ' ore fa');
+        var days = Math.floor(h / 24);
+        if (days < 7) return days + (days === 1 ? ' giorno fa' : ' giorni fa');
+        return d.toLocaleDateString('it-IT', { day: 'numeric', month: 'short' });
+      } catch(e) { return ''; }
+    }
+
+    // ── PARSE RSS XML e RENDER articoli
+    function parseAndRenderFeed(xmlStr, siteUrl) {
+      var body = document.getElementById('rssPanelBody');
+      while (body.firstChild) body.removeChild(body.firstChild);
+
+      var parser = new DOMParser();
+      var xml = parser.parseFromString(xmlStr, 'text/xml');
+      if (xml.querySelector('parsererror')) { showRssError(siteUrl); return; }
+
+      var items = Array.from(xml.querySelectorAll('item'));
+      if (!items.length) items = Array.from(xml.querySelectorAll('entry')); // Atom
+
+      if (!items.length) { showRssError(siteUrl); return; }
+
+      document.getElementById('rssPanelStatus').textContent = items.length + ' articoli';
+
+      items.forEach(function(item) {
+        // Titolo
+        var titleEl = item.querySelector('title');
+        var title = titleEl ? stripHtml(titleEl.textContent) : '(senza titolo)';
+
+        // Link
+        var link = '';
+        var linkEl = item.querySelector('link');
+        if (linkEl) {
+          link = linkEl.textContent.trim() || linkEl.getAttribute('href') || '';
+        }
+        if (!link) {
+          var guidEl = item.querySelector('guid');
+          if (guidEl) {
+            var g = guidEl.textContent.trim();
+            if (g.startsWith('http')) link = g;
+          }
+        }
+
+        // Data
+        var dateEl = item.querySelector('pubDate') || item.querySelector('updated') || item.querySelector('date');
+        var dateStr = dateEl ? dateEl.textContent.trim() : '';
+
+        // Descrizione
+        var descEl = item.querySelector('description') || item.querySelector('summary') || item.querySelector('content');
+        var desc = descEl ? stripHtml(descEl.textContent) : '';
+        if (desc.length > 230) desc = desc.substring(0, 227) + '…';
+
+        // Costruisco card con createElement (no innerHTML)
+        var card = document.createElement('div');
+        card.className = 'rss-article';
+
+        var titleDiv = document.createElement('div');
+        titleDiv.className = 'rss-article-title';
+        titleDiv.textContent = title;
+        card.appendChild(titleDiv);
+
+        if (dateStr) {
+          var metaDiv = document.createElement('div');
+          metaDiv.className = 'rss-article-meta';
+          metaDiv.textContent = formatDate(dateStr);
+          card.appendChild(metaDiv);
+        }
+
+        if (desc) {
+          var descDiv = document.createElement('div');
+          descDiv.className = 'rss-article-desc';
+          descDiv.textContent = desc;
+          card.appendChild(descDiv);
+        }
+
+        if (link) {
+          var btn = document.createElement('button');
+          btn.className = 'rss-read-btn';
+          btn.textContent = 'Leggi articolo completo →';
+          (function(l) {
+            btn.addEventListener('click', function() { openModal(l); });
+          })(link);
+          card.appendChild(btn);
+        }
+
+        body.appendChild(card);
+      });
+    }
+
+    // ── MOSTRA ERRORE RSS con fallback
+    function showRssError(siteUrl) {
+      var body = document.getElementById('rssPanelBody');
+      while (body.firstChild) body.removeChild(body.firstChild);
+
+      var errDiv = document.createElement('div');
+      errDiv.className = 'rss-error';
+
+      var icon = document.createElement('div');
+      icon.className = 'rss-error-icon';
+      icon.textContent = '⚠️';
+
+      var msg = document.createElement('p');
+      msg.textContent = 'Feed RSS non disponibile in questo momento.';
+
+      var sub = document.createElement('p');
+      sub.className = 'rss-error-sub';
+      sub.textContent = 'Puoi comunque aprire il sito direttamente con i servizi di bypass.';
+
+      var btn = document.createElement('button');
+      btn.className = 'rss-fallback-btn';
+      btn.textContent = 'Apri sito con bypass →';
+      (function(u) {
+        btn.addEventListener('click', function() { openModal(u); });
+      })(siteUrl);
+
+      errDiv.appendChild(icon);
+      errDiv.appendChild(msg);
+      errDiv.appendChild(sub);
+      errDiv.appendChild(btn);
+      body.appendChild(errDiv);
     }
 
     // ── FILTRO RICERCA
