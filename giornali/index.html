@@ -914,11 +914,12 @@
       { name: 'Google Cache', desc: 'Versione cache di Google', url: function(u){ return 'https://webcache.googleusercontent.com/search?q=cache:' + encodeURIComponent(u); } }
     ];
 
-    // ── RSS FEEDS (url giornale → url feed RSS) — URL corretti e verificati
+    // ── RSS FEEDS — URL verificati e aggiornati al 2026
     var RSS_FEEDS = {
-      'https://www.corriere.it/':           'https://www.corriere.it/rss/homepage.xml',
+      // Corriere: il dominio corretto è corriereobjects.it (non corriere.it/rss/ che è frozen al 2024)
+      'https://www.corriere.it/':           'https://xml2.corriereobjects.it/feed-hp/homepage-restyle-2025.xml',
       'https://www.repubblica.it/':         'https://www.repubblica.it/rss/homepage/rss2.0.xml',
-      'https://www.lastampa.it/':           'https://www.lastampa.it/rss/homepage.xml',
+      'https://www.lastampa.it/':           'https://www.lastampa.it/rss',
       'https://www.ilmessaggero.it/':       'https://www.ilmessaggero.it/rss/home.xml',
       'https://www.ilgiornale.it/':         'https://www.ilgiornale.it/rss/tutte-le-news.xml',
       'https://www.avvenire.it/':           'https://www.avvenire.it/rss/rss-ultimi-aggiornamenti.xml',
@@ -927,8 +928,9 @@
       'https://www.laverita.info/':         null,
       'https://www.ilfattoquotidiano.it/':  'https://www.ilfattoquotidiano.it/feed/',
       'https://www.ilsole24ore.com/':       'https://www.ilsole24ore.com/rss/italia--e-mondo.xml',
-      'https://www.milanofinanza.it/':      'https://www.milanofinanza.it/rss/rss.xml',
-      'https://www.corriere.it/economia/':  'https://www.corriere.it/rss/economia.xml',
+      'https://www.milanofinanza.it/':      null,
+      // Corriere Economia e Bologna: usano dynamic-feed (URL corretto 2025/2026)
+      'https://www.corriere.it/economia/':  'https://www.corriere.it/dynamic-feed/rss/section/Economia.xml',
       'https://it.businessinsider.com/':    'https://it.businessinsider.com/feed/',
       'https://www.linkiesta.it/':          'https://www.linkiesta.it/feed/',
       'https://www.gazzetta.it/':           'https://www.gazzetta.it/rss/home.xml',
@@ -936,16 +938,16 @@
       'https://www.tuttosport.com/':        'https://www.tuttosport.com/rss/home.xml',
       'https://www.ansa.it/':               'https://www.ansa.it/sito/notizie/topnews/topnews_rss.xml',
       'https://www.ilpost.it/':             'https://www.ilpost.it/feed/',
-      'https://www.huffingtonpost.it/':     'https://www.huffingtonpost.it/feeds/index.xml',
+      'https://www.huffingtonpost.it/':     null,
       'https://www.fanpage.it/':            'https://www.fanpage.it/feed/',
       'https://www.today.it/':              'https://www.today.it/rss.xml',
       'https://www.open.online/':           'https://www.open.online/feed/',
-      'https://www.tgcom24.mediaset.it/':   'https://www.tgcom24.mediaset.it/rss/tgcom24.xml',
+      'https://www.tgcom24.mediaset.it/':   null,
       'https://tg24.sky.it/':               'https://tg24.sky.it/articoli/rss.xml',
       'https://www.ilrestodelcarlino.it/':  'https://www.ilrestodelcarlino.it/rss/home.xml',
       'https://www.lanazione.it/':          'https://www.lanazione.it/rss/home.xml',
       'https://www.iltirreno.it/':          'https://www.iltirreno.it/rss/home.xml',
-      'https://www.corriere.it/bologna/':   'https://www.corriere.it/bologna/rss/homepage.xml',
+      'https://www.corriere.it/bologna/':   'https://www.corriere.it/dynamic-feed/rss/section/Bologna.xml',
       'https://www.ilmattino.it/':          'https://www.ilmattino.it/rss/home.xml',
       'https://palermo.repubblica.it/':     'https://palermo.repubblica.it/rss/homepage/rss2.0.xml'
     };
