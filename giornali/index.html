@@ -319,6 +319,115 @@
     /* ── HIDDEN ──────────────── */
     .paper-card.hidden { display: none; }
 
+    /* ── MODAL ───────────────── */
+    .modal-overlay {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.75);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      backdrop-filter: blur(4px);
+    }
+    .modal-overlay.open { display: flex; }
+
+    .modal {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      width: 100%;
+      max-width: 480px;
+      overflow: hidden;
+      animation: modalIn 0.2s ease;
+    }
+    @keyframes modalIn {
+      from { opacity: 0; transform: scale(0.95) translateY(8px); }
+      to   { opacity: 1; transform: none; }
+    }
+
+    .modal-header {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .modal-header h3 {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+    .modal-close {
+      background: none; border: none; cursor: pointer;
+      color: var(--text-dim); font-size: 1.2rem; line-height: 1;
+      padding: 2px 6px; border-radius: 4px;
+      transition: color 0.15s, background 0.15s;
+    }
+    .modal-close:hover { color: var(--text); background: var(--bg3); }
+
+    .modal-url {
+      padding: 10px 20px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--text-dim);
+      background: var(--bg3);
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .modal-body { padding: 16px 20px; }
+
+    .modal-label {
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 10px;
+    }
+
+    .service-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .service-btn {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+      color: var(--text);
+      transition: border-color 0.15s, background 0.15s;
+    }
+    .service-btn:hover { border-color: var(--accent); background: rgba(232,197,71,0.04); }
+
+    .service-info { display: flex; flex-direction: column; gap: 2px; }
+    .service-name { font-size: 0.88rem; font-weight: 500; }
+    .service-desc { font-size: 0.72rem; color: var(--text-dim); }
+
+    .service-arrow { color: var(--text-dim); font-size: 0.9rem; }
+
+    .modal-tip {
+      margin-top: 12px;
+      padding: 10px 14px;
+      background: rgba(232,197,71,0.06);
+      border: 1px solid rgba(232,197,71,0.15);
+      border-radius: 6px;
+      font-size: 0.76rem;
+      color: var(--text-dim);
+      line-height: 1.5;
+    }
+    .modal-tip strong { color: var(--accent); }
+
     /* ── RESPONSIVE ──────────── */
     @media (max-width: 500px) {
       .topbar-note { display: none; }
@@ -544,40 +653,123 @@
     </div>
   </div>
 
+  <!-- MODAL servizi alternativi -->
+  <div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+    <div class="modal">
+      <div class="modal-header">
+        <h3>Scegli come aprire l'articolo</h3>
+        <button class="modal-close" onclick="closeModalDirect()">✕</button>
+      </div>
+      <div class="modal-url" id="modalUrl"></div>
+      <div class="modal-body">
+        <div class="modal-label">Prova in ordine — se il primo dà 429, usa il successivo</div>
+        <div class="service-list" id="serviceList"></div>
+        <div class="modal-tip">
+          <strong>429 Too Many Requests?</strong> archive.ph limita le richieste per IP. Prova
+          <strong>Wayback Machine</strong> o <strong>12ft.io</strong> come alternativa immediata.
+        </div>
+      </div>
+    </div>
+  </div>
+
   <footer>
     <p>Questo strumento utilizza <a href="https://archive.is" target="_blank">archive.is</a> — servizio pubblico di archiviazione web. Nessun dato viene raccolto. &nbsp;·&nbsp; <a href="/cv">Dario Schioppi</a></p>
   </footer>
 
   <script>
-    // ── APRI ARCHIVIO DA URL INPUT
-    function openArchive() {
-      const url = document.getElementById('urlInput').value.trim();
-      if (!url) return;
-      const clean = url.startsWith('http') ? url : 'https://' + url;
-      window.open('https://archive.ph/newest/' + encodeURIComponent(clean), '_blank');
+    // ── SERVIZI ALTERNATIVI
+    var SERVICES = [
+      { name: 'archive.ph (newest)', desc: 'Il più completo — prova prima', url: function(u){ return 'https://archive.ph/newest/' + encodeURIComponent(u); } },
+      { name: 'archive.ph (diretto)', desc: 'Bypassa spesso il 429', url: function(u){ return 'https://archive.ph/' + encodeURIComponent(u); } },
+      { name: 'Wayback Machine', desc: 'Internet Archive — sempre affidabile', url: function(u){ return 'https://web.archive.org/web/*/' + u; } },
+      { name: '12ft.io', desc: 'Proxy reader, veloce', url: function(u){ return 'https://12ft.io/proxy?q=' + encodeURIComponent(u); } },
+      { name: 'Ghostarchive', desc: 'Alternativa a archive.ph', url: function(u){ return 'https://ghostarchive.org/archive?url=' + encodeURIComponent(u); } },
+      { name: 'Google Cache', desc: 'Versione cache di Google', url: function(u){ return 'https://webcache.googleusercontent.com/search?q=cache:' + encodeURIComponent(u); } }
+    ];
+
+    // ── COSTRUISCI PULSANTI SERVIZI (senza innerHTML)
+    function buildServices(cleanUrl) {
+      var list = document.getElementById('serviceList');
+      while (list.firstChild) { list.removeChild(list.firstChild); }
+
+      SERVICES.forEach(function(svc) {
+        var a = document.createElement('a');
+        a.className = 'service-btn';
+        a.href = svc.url(cleanUrl);
+        a.target = '_blank';
+        a.rel = 'noopener noreferrer';
+
+        var info = document.createElement('div');
+        info.className = 'service-info';
+
+        var nameEl = document.createElement('span');
+        nameEl.className = 'service-name';
+        nameEl.textContent = svc.name;
+
+        var descEl = document.createElement('span');
+        descEl.className = 'service-desc';
+        descEl.textContent = svc.desc;
+
+        info.appendChild(nameEl);
+        info.appendChild(descEl);
+
+        var arrow = document.createElement('span');
+        arrow.className = 'service-arrow';
+        arrow.textContent = '→';
+
+        a.appendChild(info);
+        a.appendChild(arrow);
+        list.appendChild(a);
+      });
     }
 
-    document.getElementById('urlInput').addEventListener('keydown', e => {
+    // ── APRI MODALE
+    function openModal(rawUrl) {
+      var clean = rawUrl.startsWith('http') ? rawUrl : 'https://' + rawUrl;
+      document.getElementById('modalUrl').textContent = clean;
+      buildServices(clean);
+      document.getElementById('modalOverlay').classList.add('open');
+    }
+
+    // ── CHIUDI MODALE (click sfondo)
+    function closeModal(event) {
+      if (event.target === document.getElementById('modalOverlay')) {
+        document.getElementById('modalOverlay').classList.remove('open');
+      }
+    }
+
+    // ── CHIUDI MODALE (pulsante ✕)
+    function closeModalDirect() {
+      document.getElementById('modalOverlay').classList.remove('open');
+    }
+
+    // ── APRI ARCHIVIO DA URL INPUT
+    function openArchive() {
+      var url = document.getElementById('urlInput').value.trim();
+      if (!url) return;
+      openModal(url);
+    }
+
+    document.getElementById('urlInput').addEventListener('keydown', function(e) {
       if (e.key === 'Enter') openArchive();
     });
 
     // ── APRI HOMEPAGE GIORNALE
     function openPaper(url) {
-      window.open('https://archive.ph/newest/' + encodeURIComponent(url), '_blank');
+      openModal(url);
     }
 
     // ── FILTRO RICERCA
     function filterCards(query) {
-      const q = query.toLowerCase().trim();
-      document.querySelectorAll('.paper-card').forEach(card => {
-        const name = card.querySelector('.paper-name').textContent.toLowerCase();
-        const domain = card.querySelector('.paper-domain').textContent.toLowerCase();
+      var q = query.toLowerCase().trim();
+      document.querySelectorAll('.paper-card').forEach(function(card) {
+        var name = card.querySelector('.paper-name').textContent.toLowerCase();
+        var domain = card.querySelector('.paper-domain').textContent.toLowerCase();
         card.classList.toggle('hidden', q && !name.includes(q) && !domain.includes(q));
       });
-      // nascondi section titles se tutti i card sono hidden
-      document.querySelectorAll('.section').forEach(sec => {
-        const cards = sec.querySelectorAll('.paper-card');
-        const allHidden = [...cards].every(c => c.classList.contains('hidden'));
+      document.querySelectorAll('.section').forEach(function(sec) {
+        var cards = sec.querySelectorAll('.paper-card');
+        var allHidden = Array.from(cards).every(function(c){ return c.classList.contains('hidden'); });
         sec.style.display = allHidden && q ? 'none' : '';
       });
     }
