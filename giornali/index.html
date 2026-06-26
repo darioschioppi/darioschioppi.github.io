@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Leggi Gratis — Giornali Italiani</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:        #0e0e0e;
+      --bg2:       #161616;
+      --bg3:       #1e1e1e;
+      --border:    #2a2a2a;
+      --text:      #e8e8e8;
+      --text-dim:  #888;
+      --accent:    #e8c547;
+      --accent-dim:rgba(232,197,71,0.12);
+      --red:       #e05a4e;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'IBM Plex Sans', system-ui, sans-serif;
+      min-height: 100vh;
+      line-height: 1.5;
+    }
+
+    /* ── TOPBAR ──────────────── */
+    .topbar {
+      background: var(--bg2);
+      border-bottom: 1px solid var(--border);
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .topbar-logo {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.15rem;
+      font-weight: 900;
+      color: var(--text);
+      white-space: nowrap;
+      letter-spacing: -0.01em;
+    }
+    .topbar-logo span { color: var(--accent); }
+
+    .topbar-note {
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+    }
+    .dot-green {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: #4caf50;
+      flex-shrink: 0;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%,100% { opacity: 1; }
+      50%      { opacity: 0.4; }
+    }
+
+    /* ── HERO ────────────────── */
+    .hero {
+      padding: 48px 20px 36px;
+      max-width: 760px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(2.2rem, 6vw, 3.6rem);
+      font-weight: 900;
+      line-height: 1.05;
+      margin-bottom: 12px;
+      letter-spacing: -0.02em;
+    }
+    .hero h1 em { font-style: italic; color: var(--accent); }
+
+    .hero p {
+      font-size: 0.95rem;
+      color: var(--text-dim);
+      max-width: 520px;
+      margin: 0 auto 28px;
+      line-height: 1.7;
+      font-weight: 300;
+    }
+
+    /* ── URL INPUT ───────────── */
+    .url-box {
+      max-width: 680px;
+      margin: 0 auto 48px;
+      padding: 0 20px;
+    }
+
+    .url-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+
+    .url-row {
+      display: flex;
+      gap: 0;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      background: var(--bg2);
+      transition: border-color 0.2s;
+    }
+    .url-row:focus-within { border-color: var(--accent); }
+
+    .url-prefix {
+      padding: 12px 14px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.78rem;
+      color: var(--text-dim);
+      background: var(--bg3);
+      border-right: 1px solid var(--border);
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+    }
+
+    #urlInput {
+      flex: 1;
+      padding: 12px 14px;
+      background: transparent;
+      border: none;
+      outline: none;
+      color: var(--text);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.82rem;
+      min-width: 0;
+    }
+    #urlInput::placeholder { color: #444; }
+
+    .url-btn {
+      padding: 12px 20px;
+      background: var(--accent);
+      color: #000;
+      border: none;
+      cursor: pointer;
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      white-space: nowrap;
+      transition: background 0.15s;
+    }
+    .url-btn:hover { background: #f0d060; }
+
+    .url-hint {
+      margin-top: 8px;
+      font-size: 0.72rem;
+      color: #444;
+    }
+    .url-hint code {
+      font-family: 'IBM Plex Mono', monospace;
+      color: #555;
+      font-size: 0.7rem;
+    }
+
+    /* ── SEARCH ──────────────── */
+    .search-wrap {
+      max-width: 760px;
+      margin: 0 auto 24px;
+      padding: 0 20px;
+    }
+
+    #searchInput {
+      width: 100%;
+      padding: 10px 14px;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text);
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-size: 0.88rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    #searchInput:focus { border-color: var(--accent); }
+    #searchInput::placeholder { color: #3a3a3a; }
+
+    /* ── SECTIONS ────────────── */
+    .section {
+      max-width: 760px;
+      margin: 0 auto 40px;
+      padding: 0 20px;
+    }
+
+    .section-title {
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* ── NEWSPAPER GRID ──────── */
+    .paper-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(min(220px, 100%), 1fr));
+      gap: 10px;
+    }
+
+    .paper-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      text-decoration: none;
+      transition: border-color 0.2s, background 0.2s, transform 0.15s;
+      cursor: pointer;
+    }
+    .paper-card:hover {
+      border-color: var(--accent);
+      background: var(--bg3);
+      transform: translateY(-1px);
+    }
+
+    .paper-info { flex: 1; min-width: 0; }
+
+    .paper-name {
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .paper-domain {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--text-dim);
+      margin-top: 2px;
+    }
+
+    .paper-badge {
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 3px 7px;
+      border-radius: 4px;
+      flex-shrink: 0;
+    }
+    .badge-paywall { background: rgba(224,90,78,0.15); color: var(--red); border: 1px solid rgba(224,90,78,0.25); }
+    .badge-free    { background: rgba(76,175,80,0.12); color: #5cb85c; border: 1px solid rgba(76,175,80,0.2); }
+    .badge-partial { background: rgba(232,197,71,0.12); color: var(--accent); border: 1px solid rgba(232,197,71,0.2); }
+
+    /* ── HOW IT WORKS ────────── */
+    .how-box {
+      max-width: 760px;
+      margin: 0 auto 48px;
+      padding: 0 20px;
+    }
+    .how-inner {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+      border-radius: 0 8px 8px 0;
+      padding: 18px 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 16px;
+    }
+    .how-step { display: flex; gap: 10px; align-items: flex-start; }
+    .how-num {
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      background: var(--accent-dim);
+      border: 1px solid rgba(232,197,71,0.3);
+      color: var(--accent);
+      font-size: 0.7rem;
+      font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .how-text { font-size: 0.82rem; color: var(--text-dim); line-height: 1.5; }
+    .how-text strong { color: var(--text); font-weight: 500; }
+
+    /* ── FOOTER ──────────────── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 24px 20px;
+      text-align: center;
+      font-size: 0.72rem;
+      color: #333;
+    }
+    footer a { color: #444; text-decoration: none; }
+
+    /* ── HIDDEN ──────────────── */
+    .paper-card.hidden { display: none; }
+
+    /* ── RESPONSIVE ──────────── */
+    @media (max-width: 500px) {
+      .topbar-note { display: none; }
+      .url-prefix { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <div class="topbar-logo">Giornali<span>.</span>free</div>
+    <div class="topbar-note">
+      <span class="dot-green"></span>
+      Powered by archive.is — bypass paywall legale
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <div class="hero">
+    <h1>Leggi i giornali<br><em>senza abbonamento</em></h1>
+    <p>Accedi agli archivi di archive.is per leggere articoli da Corriere, Repubblica, Sole 24 Ore e tutti i principali quotidiani italiani. Legale, gratuito, nessuna registrazione.</p>
+  </div>
+
+  <!-- HOW IT WORKS -->
+  <div class="how-box">
+    <div class="how-inner">
+      <div class="how-step">
+        <div class="how-num">1</div>
+        <div class="how-text"><strong>Copia l'URL</strong> dell'articolo che vuoi leggere dal browser o da un link condiviso</div>
+      </div>
+      <div class="how-step">
+        <div class="how-num">2</div>
+        <div class="how-text"><strong>Incollalo</strong> nel campo qui sotto e premi "Archivio"</div>
+      </div>
+      <div class="how-step">
+        <div class="how-num">3</div>
+        <div class="how-text"><strong>archive.is</strong> mostra la versione archiviata dell'articolo completo, senza paywall</div>
+      </div>
+      <div class="how-step">
+        <div class="how-num">4</div>
+        <div class="how-text">Se l'articolo non è ancora archiviato, <strong>archive.is lo cattura</strong> al momento</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- URL INPUT -->
+  <div class="url-box">
+    <div class="url-label">📋 Incolla URL articolo</div>
+    <div class="url-row">
+      <div class="url-prefix">archive.is/newest/</div>
+      <input type="url" id="urlInput" placeholder="https://www.corriere.it/articolo..." autocomplete="off" spellcheck="false" />
+      <button class="url-btn" onclick="openArchive()">Archivio →</button>
+    </div>
+    <div class="url-hint">Premi Invio o il pulsante per aprire. Funziona con qualsiasi URL. <code>archive.is · archive.ph · archive.today</code> sono lo stesso servizio.</div>
+  </div>
+
+  <!-- SEARCH -->
+  <div class="search-wrap">
+    <input type="text" id="searchInput" placeholder="🔍  Cerca giornale..." oninput="filterCards(this.value)" autocomplete="off" />
+  </div>
+
+  <!-- NAZIONALI -->
+  <div class="section">
+    <div class="section-title">📰 Quotidiani Nazionali</div>
+    <div class="paper-grid">
+      <div class="paper-card" onclick="openPaper('https://www.corriere.it/')">
+        <div class="paper-info"><div class="paper-name">Corriere della Sera</div><div class="paper-domain">corriere.it</div></div>
+        <span class="paper-badge badge-paywall">Paywall</span>
+      </div>
+      <div class="paper-card" onclick="openPaper('https://www.repubblica.it/')">
+        <div class="paper-info"><div class="paper-name">La Repubblica</div><div class="paper-domain">repubblica.it</div></div>
+        <span class="paper-badge badge-paywall">Paywall</span>
+      </div>
+      <div class="paper-card" onclick="openPaper('https://www.lastampa.it/')">
+        <div class="paper-info"><div class="paper-name">La Stampa</div><div class="paper-domain">lastampa.it</div></div>
+        <span class="paper-badge badge-paywall">Paywall</span>
+      </div>
+      <div class="paper-card" onclick="openPaper('https://www.ilmessaggero.it/')">
+        <div class="paper-info"><div class="paper-name">Il Messaggero</div><div class="paper-domain">ilmessaggero.it</div></div>
+        <span class="paper-badge badge-partial">Parziale</span>
+      </div>
+      <div class="paper-card" onclick="openPaper('https://www.ilgiornale.it/')">
+        <div class="paper-info"><div class="paper-name">Il Giornale</div><div class="paper-domain">ilgiornale.it</div></div>
+        <span class="paper-badge badge-free">Libero</span>
+      </div>
+      <div class="paper-card" onclick="openPaper('https://www.avvenire.it/')">
+        <div class="paper-info"><div class="paper-name">Avvenire</div><div class="paper-domain">avvenire.it</div></div>
+        <span class="paper-badge badge-partial">Parziale</span>
+      </div>
+      <div class="paper-card" onclick="openPaper('https://www.editorialedomani.it/')">
+        <div class="paper-info"><div class="paper-name">Domani</div><div class="paper-domain">editorialedomani.it</div></div>
+        <span class="paper-badge badge-paywall">Paywall</span>
+      </div>
+      <div class="paper-card" onclick="openPaper('https://www.ilfoglio.it/')">
+        <div class="paper-info"><div class="paper-name">Il Foglio</div><div class="paper-domain">ilfoglio.it</div></div>
+        <span class="paper-badge badge-partial">Parziale</span>
+      </div>
+      <div class="paper-card" onclick="openPaper('https://www.laverita.info/')">
+        <div class="paper-info"><div class="paper-name">La Verità</div><div class="paper-domain">laverita.info</div></div>
+        <span class="paper-badge badge-paywall">Paywall</span>
+      </div>
+      <div class="paper-card" onclick="openPaper('https://www.ilfattoquotidiano.it/')">
+        <div class="paper-info"><div class="paper-name">Il Fatto Quotidiano</div><div class="paper-domain">ilfattoquotidiano.it</div></div>
+        <span class="paper-badge badge-free">Libero</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ECONOMICI -->
+  <div class="section">
+    <div class="section-title">📈 Economia &amp; Finanza</div>
+    <div class="paper-grid">
+      <div class="paper-card" onclick="openPaper('https://www.ilsole24ore.com/')">
+        <div class="paper-info"><div class="paper-name">Il Sole 24 Ore</div><div class="paper-domain">ilsole24ore.com</div></div>
+        <span class="paper-badge badge-paywall">Paywall</span>
+      </div>
+      <div class="paper-card" onclick="openPaper('https://www.milanofinanza.it/')">
+        <div class="paper-info"><div class="paper-name">Milano Finanza</div><div class="paper-domain">milanofinanza.it</div></div>
+        <span class="paper-badge badge-partial">Parziale</span>
+      </div>
+      <div class="paper-card" onclick="openPaper('https://www.corriere.it/economia/')">
+        <div class="paper-info"><div class="paper-name">Corriere Economia</div><div class="paper-domain">corriere.it/economia</div></div>
+        <span class="paper-badge badge-paywall">Paywall</span>
+      </div>
+      <div class="paper-card" onclick="openPaper('https://it.businessinsider.com/')">
+        <div class="paper-info"><div class="paper-name">Business Insider Italia</div><div class="paper-domain">businessinsider.com/it</div></div>
+        <span class="paper-badge badge-free">Libero</span>
+      </div>
+      <div class="paper-card" onclick="openPaper('https://www.linkiesta.it/')">
+        <div class="paper-info"><div class="paper-name">Linkiesta</div><div class="paper-domain">linkiesta.it</div></div>
+        <span class="paper-badge badge-partial">Parziale</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SPORT -->
+  <div class="section">
+    <div class="section-title">⚽ Sport</div>
+    <div class="paper-grid">
+      <div class="paper-card" onclick="openPaper('https://www.gazzetta.it/')">
+        <div class="paper-info"><div class="paper-name">La Gazzetta dello Sport</div><div class="paper-domain">gazzetta.it</div></div>
+        <span class="paper-badge badge-partial">Parziale</span>
+      </div>
+      <div class="paper-card" onclick="openPaper('https://www.corrieredellosport.it/')">
+        <div class="paper-info"><div class="paper-name">Corriere dello Sport</div><div class="paper-domain">corrieredellosport.it</div></div>
+        <span class="paper-badge badge-partial">Parziale</span>
+      </div>
+      <div class="paper-card" onclick="openPaper('https://www.tuttosport.com/')">
+        <div class="paper-info"><div class="paper-name">Tuttosport</div><div class="paper-domain">tuttosport.com</div></div>
+        <span class="paper-badge badge-partial">Parziale</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- NEWS ONLINE -->
+  <div class="section">
+    <div class="section-title">🌐 News &amp; Approfondimenti</div>
+    <div class="paper-grid">
+      <div class="paper-card" onclick="openPaper('https://www.ansa.it/')">
+        <div class="paper-info"><div class="paper-name">ANSA</div><div class="paper-domain">ansa.it</div></div>
+        <span class="paper-badge badge-free">Libero</span>
+      </div>
+      <div class="paper-card" onclick="openPaper('https://www.ilpost.it/')">
+        <div class="paper-info"><div class="paper-name">Il Post</div><div class="paper-domain">ilpost.it</div></div>
+        <span class="paper-badge badge-free">Libero</span>
+      </div>
+      <div class="paper-card" onclick="openPaper('https://www.huffingtonpost.it/')">
+        <div class="paper-info"><div class="paper-name">HuffPost Italia</div><div class="paper-domain">huffingtonpost.it</div></div>
+        <span class="paper-badge badge-free">Libero</span>
+      </div>
+      <div class="paper-card" onclick="openPaper('https://www.fanpage.it/')">
+        <div class="paper-info"><div class="paper-name">Fanpage</div><div class="paper-domain">fanpage.it</div></div>
+        <span class="paper-badge badge-free">Libero</span>
+      </div>
+      <div class="paper-card" onclick="openPaper('https://www.today.it/')">
+        <div class="paper-info"><div class="paper-name">Today</div><div class="paper-domain">today.it</div></div>
+        <span class="paper-badge badge-free">Libero</span>
+      </div>
+      <div class="paper-card" onclick="openPaper('https://www.open.online/')">
+        <div class="paper-info"><div class="paper-name">Open</div><div class="paper-domain">open.online</div></div>
+        <span class="paper-badge badge-free">Libero</span>
+      </div>
+      <div class="paper-card" onclick="openPaper('https://www.tgcom24.mediaset.it/')">
+        <div class="paper-info"><div class="paper-name">TGCom24</div><div class="paper-domain">tgcom24.mediaset.it</div></div>
+        <span class="paper-badge badge-free">Libero</span>
+      </div>
+      <div class="paper-card" onclick="openPaper('https://tg24.sky.it/')">
+        <div class="paper-info"><div class="paper-name">Sky TG24</div><div class="paper-domain">tg24.sky.it</div></div>
+        <span class="paper-badge badge-free">Libero</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- REGIONALI -->
+  <div class="section">
+    <div class="section-title">🗺️ Regionali &amp; Locali</div>
+    <div class="paper-grid">
+      <div class="paper-card" onclick="openPaper('https://www.ilrestodelcarlino.it/')">
+        <div class="paper-info"><div class="paper-name">Il Resto del Carlino</div><div class="paper-domain">ilrestodelcarlino.it</div></div>
+        <span class="paper-badge badge-partial">Parziale</span>
+      </div>
+      <div class="paper-card" onclick="openPaper('https://www.lanazione.it/')">
+        <div class="paper-info"><div class="paper-name">La Nazione</div><div class="paper-domain">lanazione.it</div></div>
+        <span class="paper-badge badge-partial">Parziale</span>
+      </div>
+      <div class="paper-card" onclick="openPaper('https://www.iltirreno.it/')">
+        <div class="paper-info"><div class="paper-name">Il Tirreno</div><div class="paper-domain">iltirreno.it</div></div>
+        <span class="paper-badge badge-partial">Parziale</span>
+      </div>
+      <div class="paper-card" onclick="openPaper('https://www.corriere.it/bologna/')">
+        <div class="paper-info"><div class="paper-name">Corriere di Bologna</div><div class="paper-domain">corriere.it/bologna</div></div>
+        <span class="paper-badge badge-paywall">Paywall</span>
+      </div>
+      <div class="paper-card" onclick="openPaper('https://www.ilmattino.it/')">
+        <div class="paper-info"><div class="paper-name">Il Mattino</div><div class="paper-domain">ilmattino.it</div></div>
+        <span class="paper-badge badge-partial">Parziale</span>
+      </div>
+      <div class="paper-card" onclick="openPaper('https://palermo.repubblica.it/')">
+        <div class="paper-info"><div class="paper-name">Repubblica Palermo</div><div class="paper-domain">palermo.repubblica.it</div></div>
+        <span class="paper-badge badge-paywall">Paywall</span>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>Questo strumento utilizza <a href="https://archive.is" target="_blank">archive.is</a> — servizio pubblico di archiviazione web. Nessun dato viene raccolto. &nbsp;·&nbsp; <a href="/cv">Dario Schioppi</a></p>
+  </footer>
+
+  <script>
+    // ── APRI ARCHIVIO DA URL INPUT
+    function openArchive() {
+      const url = document.getElementById('urlInput').value.trim();
+      if (!url) return;
+      const clean = url.startsWith('http') ? url : 'https://' + url;
+      window.open('https://archive.ph/newest/' + encodeURIComponent(clean), '_blank');
+    }
+
+    document.getElementById('urlInput').addEventListener('keydown', e => {
+      if (e.key === 'Enter') openArchive();
+    });
+
+    // ── APRI HOMEPAGE GIORNALE
+    function openPaper(url) {
+      window.open('https://archive.ph/newest/' + encodeURIComponent(url), '_blank');
+    }
+
+    // ── FILTRO RICERCA
+    function filterCards(query) {
+      const q = query.toLowerCase().trim();
+      document.querySelectorAll('.paper-card').forEach(card => {
+        const name = card.querySelector('.paper-name').textContent.toLowerCase();
+        const domain = card.querySelector('.paper-domain').textContent.toLowerCase();
+        card.classList.toggle('hidden', q && !name.includes(q) && !domain.includes(q));
+      });
+      // nascondi section titles se tutti i card sono hidden
+      document.querySelectorAll('.section').forEach(sec => {
+        const cards = sec.querySelectorAll('.paper-card');
+        const allHidden = [...cards].every(c => c.classList.contains('hidden'));
+        sec.style.display = allHidden && q ? 'none' : '';
+      });
+    }
+  </script>
+
+</body>
+</html>
