@@ -1064,7 +1064,10 @@
 
     // ── FETCH via rss2json.com
     function fetchViaRss2json(feedUrl) {
-      var url = 'https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent(feedUrl);
+      // Timestamp anti-cache: ogni richiesta ha URL diverso → proxy non serve dalla cache
+      var sep = feedUrl.indexOf('?') === -1 ? '?' : '&';
+      var freshUrl = feedUrl + sep + '_=' + Date.now();
+      var url = 'https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent(freshUrl);
       var controller = new AbortController();
       var tid = setTimeout(function() { controller.abort(); }, 10000);
       return fetch(url, { signal: controller.signal })
@@ -1077,7 +1080,9 @@
 
     // ── FETCH via allorigins.win (XML grezzo)
     function fetchViaAllOrigins(feedUrl) {
-      var proxyUrl = 'https://api.allorigins.win/get?url=' + encodeURIComponent(feedUrl);
+      var sep = feedUrl.indexOf('?') === -1 ? '?' : '&';
+      var freshUrl = feedUrl + sep + '_=' + Date.now();
+      var proxyUrl = 'https://api.allorigins.win/get?url=' + encodeURIComponent(freshUrl);
       var controller = new AbortController();
       var tid = setTimeout(function() { controller.abort(); }, 15000);
       return fetch(proxyUrl, { signal: controller.signal })
