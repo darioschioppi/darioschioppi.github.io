@@ -874,8 +874,8 @@
         <div class="modal-label">Prova in ordine — se il primo dà 429, usa il successivo</div>
         <div class="service-list" id="serviceList"></div>
         <div class="modal-tip">
-          <strong>429 Too Many Requests?</strong> archive.ph limita le richieste per IP. Prova
-          <strong>Wayback Machine</strong> o <strong>12ft.io</strong> come alternativa immediata.
+          <strong>Articolo appena pubblicato?</strong> Usa <strong>12ft.io</strong> — funziona in tempo reale senza cache.
+          Se archive.ph dà errore 429 o pagina vuota, è normale: aspetta qualche ora o usa <strong>12ft.io</strong>.
         </div>
       </div>
     </div>
@@ -904,12 +904,12 @@
   </footer>
 
   <script>
-    // ── SERVIZI BYPASS
+    // ── SERVIZI BYPASS (ordinati per affidabilità su articoli freschi)
     var SERVICES = [
-      { name: 'archive.ph (newest)', desc: 'Il più completo — prova prima', url: function(u){ return 'https://archive.ph/newest/' + encodeURIComponent(u); } },
-      { name: 'archive.ph (diretto)', desc: 'Bypassa spesso il 429', url: function(u){ return 'https://archive.ph/' + encodeURIComponent(u); } },
+      { name: '12ft.io', desc: 'Funziona in tempo reale — consigliato per articoli freschi', url: function(u){ return 'https://12ft.io/proxy?q=' + encodeURIComponent(u); } },
+      { name: 'archive.ph (newest)', desc: 'Ottimo — potrebbe non avere articoli recentissimi', url: function(u){ return 'https://archive.ph/newest/' + encodeURIComponent(u); } },
+      { name: 'archive.ph (diretto)', desc: 'Alternativa se "newest" dà errore 429', url: function(u){ return 'https://archive.ph/' + encodeURIComponent(u); } },
       { name: 'Wayback Machine', desc: 'Internet Archive — sempre affidabile', url: function(u){ return 'https://web.archive.org/web/*/' + u; } },
-      { name: '12ft.io', desc: 'Proxy reader, veloce', url: function(u){ return 'https://12ft.io/proxy?q=' + encodeURIComponent(u); } },
       { name: 'Ghostarchive', desc: 'Alternativa a archive.ph', url: function(u){ return 'https://ghostarchive.org/archive?url=' + encodeURIComponent(u); } },
       { name: 'Google Cache', desc: 'Versione cache di Google', url: function(u){ return 'https://webcache.googleusercontent.com/search?q=cache:' + encodeURIComponent(u); } }
     ];
