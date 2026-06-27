@@ -563,6 +563,78 @@
       letter-spacing: 0.05em;
     }
 
+    /* ── RECIPE NAV ─────────── */
+    .recipe-nav {
+      position: sticky;
+      top: 0;
+      z-index: 90;
+      background: rgba(13,11,8,0.94);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(201,168,76,0.1);
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .recipe-nav::-webkit-scrollbar { display: none; }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      min-width: max-content;
+      padding: 9px 20px;
+    }
+
+    .nav-section-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.58rem;
+      font-weight: 700;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--gold);
+      padding-right: 10px;
+      border-right: 1px solid rgba(201,168,76,0.2);
+      margin-right: 8px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .nav-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 11px;
+      border-radius: 20px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      color: var(--cream-dim);
+      text-decoration: none;
+      border: 1px solid transparent;
+      transition: color 0.18s, border-color 0.18s, background 0.18s;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .nav-pill:hover {
+      color: var(--cream);
+      border-color: rgba(201,168,76,0.25);
+      background: rgba(201,168,76,0.06);
+    }
+    .nav-pill.active {
+      color: var(--gold);
+      border-color: rgba(201,168,76,0.35);
+      background: rgba(201,168,76,0.12);
+    }
+
+    .nav-sep {
+      width: 1px;
+      height: 18px;
+      background: rgba(255,255,255,0.1);
+      margin: 0 14px;
+      flex-shrink: 0;
+    }
+
     /* ── FOOTER ──────────────── */
     footer {
       text-align: center;
@@ -623,6 +695,25 @@
     <p class="hero-meta">Pasticceria Savia · Via Etnea, Catania · dal 1897</p>
     <div class="hero-scroll">Scorri</div>
   </section>
+
+  <!-- ═══ NAV ════════════════════════════════════════════════ -->
+  <nav class="recipe-nav" aria-label="Navigazione ricette">
+    <div class="nav-inner">
+      <span class="nav-section-label">Granite</span>
+      <a href="#caffe"           class="nav-pill">☕ Caffè</a>
+      <a href="#mandorla"        class="nav-pill">🌰 Mandorla</a>
+      <a href="#cioccolato"      class="nav-pill">🍫 Cioccolato</a>
+      <a href="#limone"          class="nav-pill">🍋 Limone</a>
+      <a href="#fragola"         class="nav-pill">🍓 Fragola</a>
+      <a href="#pesca"           class="nav-pill">🍑 Pesca</a>
+      <a href="#anguria"         class="nav-pill">🍉 Anguria</a>
+      <a href="#gelsi"           class="nav-pill">🫐 Gelsi</a>
+      <div class="nav-sep"></div>
+      <span class="nav-section-label">Contorni</span>
+      <a href="#zucchine-crude"    class="nav-pill">🥒 Zucchine crude</a>
+      <a href="#zucchine-marinate" class="nav-pill">🥗 Zucchine marinate</a>
+    </div>
+  </nav>
 
   <!-- ═══ STORIA ══════════════════════════════════════════════ -->
   <section class="storia reveal">
@@ -685,7 +776,7 @@
   <div class="recipe-grid">
 
     <!-- CAFFÈ -->
-    <article class="recipe-card reveal" style="--c:#c4782a;--c-dim:rgba(196,120,42,0.15)">
+    <article id="caffe" class="recipe-card reveal" style="--c:#c4782a;--c-dim:rgba(196,120,42,0.15)">
       <div class="card-header">
         <div class="card-icon">☕</div>
         <div class="card-info">
@@ -726,7 +817,7 @@
     </article>
 
     <!-- MANDORLA -->
-    <article class="recipe-card reveal" style="--c:#d4a843;--c-dim:rgba(212,168,67,0.15)">
+    <article id="mandorla" class="recipe-card reveal" style="--c:#d4a843;--c-dim:rgba(212,168,67,0.15)">
       <div class="card-header">
         <div class="card-icon">🌰</div>
         <div class="card-info">
@@ -767,7 +858,7 @@
     </article>
 
     <!-- CIOCCOLATO -->
-    <article class="recipe-card reveal" style="--c:#a0522d;--c-dim:rgba(160,82,45,0.15)">
+    <article id="cioccolato" class="recipe-card reveal" style="--c:#a0522d;--c-dim:rgba(160,82,45,0.15)">
       <div class="card-header">
         <div class="card-icon">🍫</div>
         <div class="card-info">
@@ -810,7 +901,7 @@
     </article>
 
     <!-- LIMONE -->
-    <article class="recipe-card reveal" style="--c:#c9b840;--c-dim:rgba(201,184,64,0.15)">
+    <article id="limone" class="recipe-card reveal" style="--c:#c9b840;--c-dim:rgba(201,184,64,0.15)">
       <div class="card-header">
         <div class="card-icon">🍋</div>
         <div class="card-info">
@@ -850,7 +941,7 @@
     </article>
 
     <!-- FRAGOLA -->
-    <article class="recipe-card reveal" style="--c:#c4365a;--c-dim:rgba(196,54,90,0.15)">
+    <article id="fragola" class="recipe-card reveal" style="--c:#c4365a;--c-dim:rgba(196,54,90,0.15)">
       <div class="card-header">
         <div class="card-icon">🍓</div>
         <div class="card-info">
@@ -890,7 +981,7 @@
     </article>
 
     <!-- PESCA -->
-    <article class="recipe-card reveal" style="--c:#d47a38;--c-dim:rgba(212,122,56,0.15)">
+    <article id="pesca" class="recipe-card reveal" style="--c:#d47a38;--c-dim:rgba(212,122,56,0.15)">
       <div class="card-header">
         <div class="card-icon">🍑</div>
         <div class="card-info">
@@ -930,7 +1021,7 @@
     </article>
 
     <!-- ANGURIA -->
-    <article class="recipe-card reveal" style="--c:#c43a3a;--c-dim:rgba(196,58,58,0.15)">
+    <article id="anguria" class="recipe-card reveal" style="--c:#c43a3a;--c-dim:rgba(196,58,58,0.15)">
       <div class="card-header">
         <div class="card-icon">🍉</div>
         <div class="card-info">
@@ -969,7 +1060,7 @@
     </article>
 
     <!-- GELSI NERI -->
-    <article class="recipe-card reveal" style="--c:#9b4dca;--c-dim:rgba(155,77,202,0.15)">
+    <article id="gelsi" class="recipe-card reveal" style="--c:#9b4dca;--c-dim:rgba(155,77,202,0.15)">
       <div class="card-header">
         <div class="card-icon">🫐</div>
         <div class="card-info">
@@ -1019,7 +1110,7 @@
   <div class="recipe-grid" style="margin-bottom: 80px;">
 
     <!-- ZUCCHINE CRUDE ALL'INSALATA -->
-    <article class="recipe-card reveal" style="--c:#5a9e3a;--c-dim:rgba(90,158,58,0.15)">
+    <article id="zucchine-crude" class="recipe-card reveal" style="--c:#5a9e3a;--c-dim:rgba(90,158,58,0.15)">
       <div class="card-header">
         <div class="card-icon">🥒</div>
         <div class="card-info">
@@ -1064,7 +1155,7 @@
     </article>
 
     <!-- ZUCCHINE CRUDE MARINATE -->
-    <article class="recipe-card reveal" style="--c:#4a8a6e;--c-dim:rgba(74,138,110,0.15)">
+    <article id="zucchine-marinate" class="recipe-card reveal" style="--c:#4a8a6e;--c-dim:rgba(74,138,110,0.15)">
       <div class="card-header">
         <div class="card-icon">🥗</div>
         <div class="card-info">
@@ -1129,16 +1220,51 @@
     });
 
     // ── SCROLL REVEAL ─────────────────────────────────────────
-    const observer = new IntersectionObserver(entries => {
+    const revealObserver = new IntersectionObserver(entries => {
       entries.forEach((entry, i) => {
         if (entry.isIntersecting) {
           setTimeout(() => entry.target.classList.add('visible'), i * 60);
-          observer.unobserve(entry.target);
+          revealObserver.unobserve(entry.target);
         }
       });
     }, { threshold: 0.1 });
 
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    // ── NAV ACTIVE PILL ───────────────────────────────────────
+    (function() {
+      const navPills = document.querySelectorAll('.nav-pill');
+      const articles = Array.from(document.querySelectorAll('article[id]'));
+      if (!articles.length) return;
+
+      function setActive(id) {
+        navPills.forEach(p => {
+          p.classList.toggle('active', p.getAttribute('href') === '#' + id);
+        });
+        // scroll active pill into view inside the nav
+        const active = document.querySelector('.nav-pill.active');
+        if (active) active.scrollIntoView({ inline: 'nearest', block: 'nearest', behavior: 'smooth' });
+      }
+
+      const navObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) setActive(entry.target.id);
+        });
+      }, {
+        rootMargin: '-40% 0px -55% 0px',   // triggers when article is in the central band
+        threshold: 0
+      });
+
+      articles.forEach(a => navObserver.observe(a));
+
+      // on click: smooth scroll + set active immediately
+      navPills.forEach(pill => {
+        pill.addEventListener('click', function(e) {
+          const targetId = this.getAttribute('href').slice(1);
+          setActive(targetId);
+        });
+      });
+    })();
   </script>
 
 </body>
