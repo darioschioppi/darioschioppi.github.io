@@ -635,6 +635,34 @@
       flex-shrink: 0;
     }
 
+    /* ── TABS ────────────────── */
+    .tab-bar {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      border-bottom: 1px solid rgba(201,168,76,0.15);
+      padding: 0 20px;
+      background: var(--black2);
+    }
+    .tab-btn {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--cream-dim);
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      padding: 11px 20px;
+      cursor: pointer;
+      transition: color 0.18s, border-color 0.18s;
+      margin-bottom: -1px;
+    }
+    .tab-btn.active { color: var(--gold); border-bottom-color: var(--gold); }
+    .tab-btn:hover { color: var(--cream); }
+    .hidden { display: none !important; }
+
     /* ── FOOTER ──────────────── */
     footer {
       text-align: center;
@@ -698,8 +726,11 @@
 
   <!-- ═══ NAV ════════════════════════════════════════════════ -->
   <nav class="recipe-nav" aria-label="Navigazione ricette">
-    <div class="nav-inner">
-      <span class="nav-section-label">Granite</span>
+    <div class="tab-bar">
+      <button class="tab-btn active" data-tab="granite">🧊 Granite</button>
+      <button class="tab-btn" data-tab="verdure">🥗 Verdure</button>
+    </div>
+    <div class="nav-inner" id="pills-granite">
       <a href="#caffe"           class="nav-pill">☕ Caffè</a>
       <a href="#mandorla"        class="nav-pill">🌰 Mandorla</a>
       <a href="#cioccolato"      class="nav-pill">🍫 Cioccolato</a>
@@ -708,12 +739,15 @@
       <a href="#pesca"           class="nav-pill">🍑 Pesca</a>
       <a href="#anguria"         class="nav-pill">🍉 Anguria</a>
       <a href="#gelsi"           class="nav-pill">🫐 Gelsi</a>
-      <div class="nav-sep"></div>
-      <span class="nav-section-label">Contorni</span>
+    </div>
+    <div class="nav-inner hidden" id="pills-verdure">
       <a href="#zucchine-crude"    class="nav-pill">🥒 Zucchine crude</a>
       <a href="#zucchine-marinate" class="nav-pill">🥗 Zucchine marinate</a>
     </div>
   </nav>
+
+  <!-- ═══ SEZIONE GRANITE ════════════════════════════════════ -->
+  <div id="section-granite">
 
   <!-- ═══ STORIA ══════════════════════════════════════════════ -->
   <section class="storia reveal">
@@ -1101,9 +1135,12 @@
 
   </div><!-- /recipe-grid -->
 
-  <!-- ═══ CONTORNI ════════════════════════════════════════════ -->
+  </div><!-- /section-granite -->
+
+  <!-- ═══ SEZIONE VERDURE ══════════════════════════════════════ -->
+  <div id="section-verdure" class="hidden">
   <div class="section-header reveal" style="margin-top: 80px;">
-    <div class="label">Contorni &amp; Insalate</div>
+    <div class="label">Verdure &amp; Insalate</div>
     <h2>Cucina <em>veloce</em></h2>
   </div>
 
@@ -1201,12 +1238,33 @@
 
   </div><!-- /recipe-grid contorni -->
 
+  </div><!-- /section-verdure -->
+
   <!-- ═══ FOOTER ══════════════════════════════════════════════ -->
   <footer>
     <p>Ricette siciliane — <a href="/cv">Dario Schioppi</a> &nbsp;·&nbsp; ispirate alla Pasticceria Savia, Catania</p>
   </footer>
 
   <script>
+    // ── TAB SWITCHING ────────────────────────────────────────
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const tab = this.dataset.tab;
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        document.getElementById('pills-granite').classList.toggle('hidden', tab !== 'granite');
+        document.getElementById('pills-verdure').classList.toggle('hidden', tab !== 'verdure');
+        document.getElementById('section-granite').classList.toggle('hidden', tab !== 'granite');
+        document.getElementById('section-verdure').classList.toggle('hidden', tab !== 'verdure');
+        // scroll to top of visible section smoothly
+        const target = document.getElementById('section-' + tab);
+        if (target) {
+          const offset = target.getBoundingClientRect().top + window.scrollY - 80;
+          window.scrollTo({ top: offset, behavior: 'smooth' });
+        }
+      });
+    });
+
     // ── CARD TOGGLE ──────────────────────────────────────────
     document.querySelectorAll('.recipe-card').forEach(card => {
       const toggle = card.querySelector('.card-toggle');
