@@ -257,8 +257,9 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            flex: 0 0 auto;
-            width: 118px;
+            flex: 0 1 auto;
+            min-width: 0;
+            max-width: 118px;
         }
 
         .career-step .step-circle {
@@ -286,7 +287,8 @@
             letter-spacing: 0.5px;
             color: var(--dark-blue);
             text-align: center;
-            white-space: nowrap;
+            white-space: normal;
+            line-height: 1.3;
         }
 
         .career-step .step-period {
@@ -299,11 +301,11 @@
         }
 
         .career-connector {
-            flex: 1 1 auto;
+            flex: 1 1 20px;
             display: flex;
             align-items: center;
             margin-top: 17px;
-            min-width: 20px;
+            min-width: 10px;
         }
 
         .career-connector .line {
@@ -447,6 +449,16 @@
             }
             .sidebar { padding: 30px 20px; }
             .main { padding: 30px 20px; }
+        }
+
+        /* Schermi stretti (telefono in verticale o orizzontale con poco spazio) */
+        @media (max-width: 540px) {
+            .career-step { max-width: 92px; }
+            .career-step .step-circle { width: 28px; height: 28px; font-size: 11px; }
+            .career-step .step-label { font-size: 9.5px; }
+            .career-step .step-period { font-size: 9px; }
+            .career-connector { min-width: 6px; margin-top: 14px; }
+            .career-connector .arrow { border-top-width: 5px; border-bottom-width: 5px; border-left-width: 7px; }
         }
     </style>
 </head>
