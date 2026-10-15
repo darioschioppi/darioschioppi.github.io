@@ -246,93 +246,38 @@
             font-style: italic;
         }
 
-        /* Timeline orizzontale ruoli */
-        .role-timeline {
-            position: relative;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin: 30px 6px 38px;
-            padding: 0 4px;
+        .role-list {
+            margin: 6px 0 12px;
+            padding-left: 0;
+            list-style: none;
         }
 
-        .role-timeline::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            right: 0;
-            top: 50%;
-            height: 2px;
-            background: var(--light-blue);
-            transform: translateY(-50%);
-        }
-
-        .role-node {
-            position: relative;
-            z-index: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            flex: 1;
-        }
-
-        .role-node.up {
-            justify-content: flex-end;
-        }
-
-        .role-node.down {
-            justify-content: flex-start;
-        }
-
-        .role-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: var(--white);
-            border: 3px solid var(--accent);
-            box-shadow: 0 0 0 3px var(--pale-bg);
-        }
-
-        .role-connector {
-            width: 2px;
-            height: 14px;
-            background: var(--light-blue);
-        }
-
-        .role-label {
-            font-size: 10.5px;
+        .role-list li {
+            font-size: 11.5px;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            color: var(--mid-blue);
-            background: var(--light-blue);
-            padding: 4px 10px;
-            border-radius: 12px;
-            white-space: nowrap;
+            color: var(--dark-blue);
+            background: var(--accent);
+            border: 1px solid var(--mid-blue);
+            border-radius: 10px;
+            padding: 4px 12px;
+            margin-bottom: 6px;
+            box-shadow: 0 2px 4px rgba(74,144,217,0.3);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            width: fit-content;
         }
 
-        .role-period {
+        .role-list li .period {
             font-size: 10px;
-            font-weight: 500;
-            color: var(--light-gray);
+            font-weight: 600;
+            text-transform: none;
+            letter-spacing: normal;
+            color: var(--dark-blue);
+            opacity: 0.75;
             white-space: nowrap;
-        }
-
-        .role-node.up .role-label { margin-bottom: 6px; }
-        .role-node.up .role-period { margin-top: 6px; }
-        .role-node.down .role-period { margin-bottom: 6px; }
-        .role-node.down .role-label { margin-top: 6px; }
-
-        @media (max-width: 800px) {
-            .role-timeline { flex-direction: column; align-items: flex-start; margin: 16px 0; }
-            .role-timeline::before { display: none; }
-            .role-node, .role-node.up, .role-node.down {
-                flex-direction: row; align-items: center; width: 100%;
-                margin-bottom: 10px; justify-content: flex-start; gap: 10px;
-            }
-            .role-connector { display: none; }
-            .role-node.up .role-label, .role-node.down .role-label { margin: 0; }
-            .role-node.up .role-period, .role-node.down .role-period { margin: 0; }
         }
 
         .project {
@@ -645,26 +590,11 @@
                     <span class="company-name">HSPI S.p.A. @ TXT Group</span>
                     <span class="company-meta">Bologna &mdash; Nov 2017 &ndash; Presente</span>
                 </div>
-                <div class="role-timeline">
-                    <div class="role-node down">
-                        <div class="role-dot"></div>
-                        <div class="role-connector"></div>
-                        <span class="role-label">IT Consultant</span>
-                        <span class="role-period">Nov 2017 &ndash; Mar 2020</span>
-                    </div>
-                    <div class="role-node down">
-                        <div class="role-dot"></div>
-                        <div class="role-connector"></div>
-                        <span class="role-label">IT Senior Consultant</span>
-                        <span class="role-period">Mar 2020 &ndash; Gen 2023</span>
-                    </div>
-                    <div class="role-node down">
-                        <div class="role-dot"></div>
-                        <div class="role-connector"></div>
-                        <span class="role-label">IT Manager</span>
-                        <span class="role-period">Feb 2023 &ndash; Presente</span>
-                    </div>
-                </div>
+                <ul class="role-list">
+                    <li>IT Manager <span class="period">Feb 2023 &ndash; Presente</span></li>
+                    <li>IT Senior Consultant <span class="period">Mar 2020 &ndash; Gen 2023</span></li>
+                    <li>IT Consultant <span class="period">Nov 2017 &ndash; Mar 2020</span></li>
+                </ul>
 
                 <div class="project">
                     <div class="project-title">
